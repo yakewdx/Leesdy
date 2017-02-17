@@ -7,7 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-
+import dx.leesdy.view.BasicViewController;
 import dx.leesdy.player.*;
 
 public class Main extends Application {
@@ -42,9 +42,13 @@ public class Main extends Application {
         loader.setLocation(Main.class.getResource("../view/basiclayout.fxml"));
         AnchorPane BasicView = (AnchorPane) loader.load();
         
+        BasicViewController controller = (BasicViewController)loader.getController();
+        
         root.setCenter(BasicView);
         // init Media Player
-        LDWavPlayer player = new LDWavPlayer("file:resources/test.mp3", root);
+        LDWavPlayer player = new LDWavPlayer("resources/test.mp3", root);
+        controller.setPlayer(player);
+        player.initGraphics(controller.getCanvas());
         
 		} catch (Exception e) {
 			e.printStackTrace();
