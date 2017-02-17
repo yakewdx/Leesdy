@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.canvas.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="193.0" prefWidth="400.0" stylesheets="@../controller/application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dx.leesdy.view.BasicViewController">
+   <children>
+      <Pane prefHeight="282.0" prefWidth="400.0" styleClass="pane_basic" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="playButton" layoutX="217.0" layoutY="140.0" mnemonicParsing="false" onAction="#handlePlay" text="Play" />
+            <Button fx:id="StopButton" layoutX="306.0" layoutY="141.0" mnemonicParsing="false" onAction="#handleStop" text="Stop" />
+            <Pane layoutX="10.0" layoutY="12.0" prefHeight="103.0" prefWidth="377.0" styleClass="canvas">
+               <children>
+                  <Canvas fx:id="canvas" height="100.0" layoutX="3.0" layoutY="1.0" width="370.0" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
