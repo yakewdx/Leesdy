@@ -68,6 +68,8 @@ public class Main extends Application {
         // init Media Player
         LDWavPlayer player = new LDWavPlayer("resources/8k16bitpcm.wav", root);
         controller.setPlayer(player);
+        player.setViewController(controller);
+        
         player.initGraphics(controller.getCanvas());
         
 		} catch (Exception e) {

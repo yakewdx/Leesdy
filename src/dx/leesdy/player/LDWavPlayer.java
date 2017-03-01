@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
+import javafx.util.Duration;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
@@ -16,8 +17,10 @@ import javafx.scene.media.MediaErrorEvent;
 import javafx.scene.media.MediaMarkerEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import dx.leesdy.view.BasicViewController;
 import dx.leesdy.view.Painter;
 import dx.leesdy.model.*;
+import dx.leesdy.model.paintcomponents.PDrawPlaybackState;
 import dx.leesdy.model.paintcomponents.PDrawVerticalLine;
 import dx.leesdy.model.paintcomponents.PDrawWav;
 import dx.leesdy.model.paintcomponents.PTestOutput;
@@ -33,13 +36,17 @@ public class LDWavPlayer {
 	private Media media;
 	private WavWrapper wav;
 	private MediaPlayer mediaPlayer;
-	private MediaView mediaView;
+	private BasicViewController viewController;
 	Painter painter;
 	
 	public LDWavPlayer(String filename, BorderPane root) {
 		source = filename;
 		mRoot = root;
 		initPlayer();
+	}
+	
+	public void setViewController(BasicViewController controller) {
+		viewController = controller;
 	}
 	
 	public void initGraphics(Canvas canvas) {
@@ -74,10 +81,11 @@ public class LDWavPlayer {
 		painter = new Painter(canvas);
 		//painter.addComponent(new PTestOutput(1));
 		painter.addComponent(new PDrawVerticalLine(1));
-		painter.addComponent(new PTimer(2));
+		//painter.addComponent(new PTimer(2));
 		painter.addComponent(new PDrawWav(3, wav));
+		painter.addComponent(new PDrawPlaybackState(4,wav,this));
 		
-		LDExecutor.getExecutor().scheduleWithFixedDelay(painter,10,50,TimeUnit.MILLISECONDS);
+		LDExecutor.getExecutor().scheduleWithFixedDelay(painter,10,100,TimeUnit.MILLISECONDS);
 		
 	}
 	
@@ -118,7 +126,7 @@ public class LDWavPlayer {
 	        } else {
 	            // Handle synchronous error creating Media.
 	        }
-	        mRoot.getChildren().add(mediaView);
+	        //mRoot.getChildren().add(mediaView);
 	        
 	        // Set listener
 	        mediaPlayer.setOnMarker(new EventHandler<MediaMarkerEvent>() {
@@ -143,6 +151,17 @@ public class LDWavPlayer {
 	        	
 	        });
 	        
+	        mediaPlayer.setOnEndOfMedia(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					stop();
+					viewController.setPlayButtonState(true);
+				}
+	        	
+	        });
+	        
 	        
 	    } catch (Exception mediaException) {
 	        // Handle exception in Media constructor.
@@ -157,6 +176,7 @@ public class LDWavPlayer {
 	
 	public void stop() {
 		mediaPlayer.stop();
+		mediaPlayer.seek(Duration.ZERO);
 	}
 	
 	public void pause() {
@@ -169,5 +189,9 @@ public class LDWavPlayer {
 	
 	private void onStop() {
 		
+	}
+	
+	public MediaPlayer getPlayer() {
+		return this.mediaPlayer;
 	}
 }

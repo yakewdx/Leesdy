@@ -16,8 +16,8 @@ import dx.leesdy.model.*;
 
 public class PDrawWav extends PainterComponent {
 
-	private WavWrapper wav;
-	
+	protected WavWrapper wav;
+	protected int [][] data;
 	
 	public PDrawWav(int priority) {
 		super(priority);
@@ -27,15 +27,21 @@ public class PDrawWav extends PainterComponent {
 	public PDrawWav(int priority, WavWrapper wrapper) {
 		super(priority);
 		wav = wrapper;
+		init();
 	}
 	
 	public void setWav(WavWrapper wrapper) {
 		wav = wrapper;
+		init();
 	}
+	
+	private void init() {
+		data = wav.getData();
+	}
+	
 	@Override
 	public void paint(Canvas canvas) {
 		// TODO Auto-generated method stub
-		int [][] data = wav.getData();
 		if (data != null) {
 			GraphicsContext gc = canvas.getGraphicsContext2D();
 			gc.setStroke(Color.AQUA);
@@ -43,11 +49,12 @@ public class PDrawWav extends PainterComponent {
 			double canvasWidth = canvas.getWidth();
 			double canvasHeight = canvas.getHeight();
 			int length = data[0].length;
+			int step = (int) (length / canvasWidth);
 			double k = canvasHeight / 2.0 / 32768.0;
 			int x = 0, y = 0, prevX = 0, prevY = 0;
 			for (int i = 0; i < canvasWidth; ++i) {
 				x = i;
-				y = (int) (canvasHeight - (int)(data[0][i*3]*k + canvasHeight/2));
+				y = (int) (canvasHeight - (int)(data[0][i*step]*k + canvasHeight/2));
 				
 				if (i != 0) {
 					gc.strokeLine(x, y, prevX, prevY);

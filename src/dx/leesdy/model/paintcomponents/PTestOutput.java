@@ -22,6 +22,7 @@ public class PTestOutput extends PainterComponent {
 
 	/* (non-Javadoc)
 	 * @see dx.leesdy.model.PainterComponent#paint(javafx.scene.canvas.Canvas)
+	 * Only for test
 	 */
 	@Override
 	public void paint(Canvas canvas) {
