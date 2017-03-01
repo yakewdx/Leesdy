@@ -1,13 +1,14 @@
 package dx.leesdy.player;
 
 import java.io.File;
-
+import java.util.concurrent.TimeUnit;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
@@ -17,8 +18,11 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import dx.leesdy.view.Painter;
 import dx.leesdy.model.*;
+import dx.leesdy.model.paintcomponents.PDrawVerticalLine;
+import dx.leesdy.model.paintcomponents.PDrawWav;
 import dx.leesdy.model.paintcomponents.PTestOutput;
 import dx.leesdy.model.paintcomponents.PTimer;
+import dx.leesdy.utils.*;
 
 // Wav player wrapper
 public class LDWavPlayer {
@@ -27,6 +31,7 @@ public class LDWavPlayer {
 	private String source;
 	private BorderPane mRoot;
 	private Media media;
+	private WavWrapper wav;
 	private MediaPlayer mediaPlayer;
 	private MediaView mediaView;
 	Painter painter;
@@ -40,9 +45,40 @@ public class LDWavPlayer {
 	public void initGraphics(Canvas canvas) {
 		// TODO Auto-generated method stub
 		
+		MouseState ms = DeviceState.getInstance().getMouseState();
+		canvas.setOnMouseMoved(new EventHandler<MouseEvent> () {
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				//System.out.println("Mouse Moved");
+				ms.setMouseInCanvas(true);
+				ms.setX(event.getX());
+				ms.setY(event.getY());
+			}
+			
+		});
+		
+		canvas.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				ms.setMouseInCanvas(false);
+				ms.setX(event.getX());
+				ms.setY(event.getY());
+			}
+			
+		});
+		
 		painter = new Painter(canvas);
-		painter.addComponent(new PTestOutput(1));
+		//painter.addComponent(new PTestOutput(1));
+		painter.addComponent(new PDrawVerticalLine(1));
 		painter.addComponent(new PTimer(2));
+		painter.addComponent(new PDrawWav(3, wav));
+		
+		LDExecutor.getExecutor().scheduleWithFixedDelay(painter,10,50,TimeUnit.MILLISECONDS);
+		
 	}
 	
 	private void initPlayer() {
@@ -56,13 +92,17 @@ public class LDWavPlayer {
 	            });
 	            try {
 	                mediaPlayer = new MediaPlayer(media);
+	                
+	                // Set media to wavWrapper
+	                wav = new WavWrapper(media);
+	                
 	                if (mediaPlayer.getError() == null) {
 	                    mediaPlayer.setOnError(new Runnable() {
 	                        public void run() {
 	                            // Handle asynchronous error in MediaPlayer object.
 	                        }
 	                    });
-	                    mediaView = new MediaView(mediaPlayer);
+	                   // mediaView = new MediaView(mediaPlayer);
 //	                    mediaView.setOnError(new EventHandler() {
 //	                        public void handle(MediaErrorEvent t) {
 //	                            // Handle asynchronous error in MediaView.
@@ -97,7 +137,7 @@ public class LDWavPlayer {
 				public void spectrumDataUpdate(double timestamp, double duration, float[] magnitudes, float[] phases) {
 					// TODO Auto-generated method stub
 					
-					if (painter != null) painter.paint();
+					//if (painter != null) painter.paint();
 					
 				}
 	        	
@@ -117,6 +157,10 @@ public class LDWavPlayer {
 	
 	public void stop() {
 		mediaPlayer.stop();
+	}
+	
+	public void pause() {
+		mediaPlayer.pause();
 	}
 	
 	private void onPlay() {

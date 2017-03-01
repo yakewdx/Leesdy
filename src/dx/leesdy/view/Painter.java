@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import dx.leesdy.model.paintcomponents.PainterComponent;
 import javafx.scene.canvas.Canvas;
 
-public class Painter {
+public class Painter implements Runnable {
 
 	private ArrayList<PainterComponent> list;
 	
@@ -21,10 +21,24 @@ public class Painter {
 		return this;
 	}
 	
+	@Override
+	public void run() {
+		//while (!Thread.currentThread().isInterrupted()) {
+			paint();
+//			try {
+//				Thread.sleep(100);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+		//}
+	}
+	
 	public void paint() {
+		canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		list.forEach(component -> {
 			component.paint(canvas);
 		});
-		canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		
 	}
 }
