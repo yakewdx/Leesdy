@@ -1,6 +1,7 @@
 package dx.leesdy.view;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import dx.leesdy.model.paintcomponents.PainterComponent;
 import javafx.scene.canvas.Canvas;
@@ -35,6 +36,15 @@ public class Painter implements Runnable {
 	}
 	
 	public void paint() {
+		list.sort(new Comparator<PainterComponent> () {
+
+			@Override
+			public int compare(PainterComponent arg0, PainterComponent arg1) {
+				// TODO Auto-generated method stub
+				return arg1.compareTo(arg0);
+			}
+			
+		});
 		canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		list.forEach(component -> {
 			component.paint(canvas);

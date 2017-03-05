@@ -11,6 +11,8 @@
    <children>
       <Pane prefHeight="282.0" prefWidth="400.0" styleClass="pane_basic" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+         	<Button fx:id="diarizationButton" prefWidth="90.0" layoutX="10.0" layoutY="140.0"  mnemonicParsing="false" onAction="#handleDiarization" text="Diariz" />
+         	<Button fx:id="addButton" prefWidth="90.0" layoutX="100.0" layoutY="140.0"  mnemonicParsing="false" onAction="#handleAdd" text="Add" />
             <Button fx:id="playButton" prefWidth="90.0" layoutX="200.0" layoutY="140.0"  mnemonicParsing="false" onAction="#handlePlay" text="Play" />
             <Button fx:id="pauseButton" prefWidth="90.0" layoutX="200.0" layoutY="140.0" mnemonicParsing="false" onAction="#handlePause" text="Pause" />
             <Button fx:id="StopButton" layoutX="306.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleStop" text="Stop" />

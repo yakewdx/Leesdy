@@ -14,7 +14,7 @@ import javafx.util.Duration;
 
 public class PDrawPlaybackState extends PDrawWav {
 
-	private LDWavPlayer player;
+	protected LDWavPlayer player;
 	
 	public PDrawPlaybackState(int priority) {
 		super(priority);
@@ -37,17 +37,13 @@ public class PDrawPlaybackState extends PDrawWav {
 		if (this.wav != null && this.player != null) {
 			Status status = this.player.getPlayer().getStatus();
 			if (status == Status.PLAYING || status == Status.PAUSED) {
-				Media media = player.getPlayer().getMedia();
 				MediaPlayer pl = player.getPlayer();
 				Duration curTime = pl.getCurrentTime();
 				Duration mediaLength = pl.getTotalDuration();
 				Double time = curTime.toSeconds();
 				Double totalTime = mediaLength.toSeconds();
 				double canvasWidth = canvas.getWidth();
-				double canvasHeight = canvas.getHeight();
 				int pos = (int)(time / totalTime * canvasWidth);
-				int length = data[0].length;
-				int step = (int) (length / canvasWidth);
 				GraphicsContext gc = canvas.getGraphicsContext2D();
 				
 				String playbackStatus = String.format("%.2f / %.2f", time, totalTime);

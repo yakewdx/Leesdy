@@ -3,28 +3,22 @@ package dx.leesdy.player;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.paint.*;
-import javafx.scene.shape.*;
 import javafx.util.Duration;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaErrorEvent;
 import javafx.scene.media.MediaMarkerEvent;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import dx.leesdy.view.BasicViewController;
 import dx.leesdy.view.Painter;
 import dx.leesdy.model.*;
+import dx.leesdy.model.paintcomponents.PDrawDiarizationResult;
 import dx.leesdy.model.paintcomponents.PDrawPlaybackState;
 import dx.leesdy.model.paintcomponents.PDrawVerticalLine;
 import dx.leesdy.model.paintcomponents.PDrawWav;
-import dx.leesdy.model.paintcomponents.PTestOutput;
-import dx.leesdy.model.paintcomponents.PTimer;
+
 import dx.leesdy.utils.*;
 
 // Wav player wrapper
@@ -37,7 +31,11 @@ public class LDWavPlayer {
 	private WavWrapper wav;
 	private MediaPlayer mediaPlayer;
 	private BasicViewController viewController;
-	Painter painter;
+	private Painter painter;
+	private LDDiarizationResultReader reader;
+	
+	// For test
+	private String DiarizationOutput = "showName.seg";
 	
 	public LDWavPlayer(String filename, BorderPane root) {
 		source = filename;
@@ -79,14 +77,22 @@ public class LDWavPlayer {
 		});
 		
 		painter = new Painter(canvas);
-		//painter.addComponent(new PTestOutput(1));
-		painter.addComponent(new PDrawVerticalLine(1));
-		//painter.addComponent(new PTimer(2));
+		painter.addComponent(new PDrawVerticalLine(6,wav,this));
 		painter.addComponent(new PDrawWav(3, wav));
-		painter.addComponent(new PDrawPlaybackState(4,wav,this));
+		painter.addComponent(new PDrawPlaybackState(5,wav,this));
 		
 		LDExecutor.getExecutor().scheduleWithFixedDelay(painter,10,100,TimeUnit.MILLISECONDS);
 		
+	}
+	
+	public void addPainterComponents() {
+		if (reader != null) {
+			painter.addComponent(new PDrawDiarizationResult(4, wav, this, reader));
+		} else {
+			reader = new LDDiarizationResultReader(DiarizationOutput);
+			painter.addComponent(new PDrawDiarizationResult(4, wav, this, reader));
+			System.out.println("Reader is NULL.");
+		}
 	}
 	
 	private void initPlayer() {
@@ -181,6 +187,20 @@ public class LDWavPlayer {
 	
 	public void pause() {
 		mediaPlayer.pause();
+	}
+	
+	public void diarization() {
+		LDExecutor.getExecutor().submit(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				String output = DiarizationOutput;
+				new LDDiarization(source, output).diarization();
+				reader = new LDDiarizationResultReader(output);
+			}
+			
+		});
 	}
 	
 	private void onPlay() {

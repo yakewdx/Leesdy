@@ -74,6 +74,11 @@ public class BasicViewController {
 
     }
     
+    // Only for test
+    @FXML
+    private void handleAdd() {
+    	this.player.addPainterComponents();
+    }
     
     @FXML
     private void handleStop() {
@@ -81,6 +86,13 @@ public class BasicViewController {
     	System.out.println("Stop clicked.");
     	this.player.stop();
     	setPlayButtonState(true);
+    }
+    
+    @FXML
+    private void handleDiarization() {
+    	// todo: diarization
+    	System.out.println("Start Diarization");
+    	this.player.diarization();
     }
     
     public void setPlayer(LDWavPlayer _player) {
