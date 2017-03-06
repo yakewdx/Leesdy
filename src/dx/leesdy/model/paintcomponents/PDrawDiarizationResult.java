@@ -91,6 +91,9 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 				gc.setGlobalAlpha(0.5);
 				gc.fillRect(startpos, 0, (endpos - startpos), canvasHeight);
 				gc.setGlobalAlpha(1.0);
+				
+				gc.setFill(Color.WHITE);
+				gc.fillText(speakerLabel, startpos + 2, 13);
 			}
 		});
 
