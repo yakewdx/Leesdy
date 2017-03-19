@@ -12,7 +12,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaMarkerEvent;
 import javafx.scene.media.MediaPlayer;
 import dx.leesdy.view.BasicViewController;
-import dx.leesdy.view.Painter;
 import dx.leesdy.model.*;
 import dx.leesdy.model.paintcomponents.PDrawDiarizationResult;
 import dx.leesdy.model.paintcomponents.PDrawPlaybackState;
@@ -21,12 +20,15 @@ import dx.leesdy.model.paintcomponents.PDrawWav;
 
 import dx.leesdy.utils.*;
 
-// Wav player wrapper
+/** Wav player wrapper
+ *  To initialize the player:
+ *  
+ * 
+ */
 public class LDWavPlayer {
 	
 	// filename
 	private String source;
-	private BorderPane mRoot;
 	private Media media;
 	private WavWrapper wav;
 	private MediaPlayer mediaPlayer;
@@ -37,9 +39,8 @@ public class LDWavPlayer {
 	// For test
 	private String DiarizationOutput = "showName.seg";
 	
-	public LDWavPlayer(String filename, BorderPane root) {
+	public LDWavPlayer(String filename) {
 		source = filename;
-		mRoot = root;
 		initPlayer();
 	}
 	
@@ -116,12 +117,7 @@ public class LDWavPlayer {
 	                            // Handle asynchronous error in MediaPlayer object.
 	                        }
 	                    });
-	                   // mediaView = new MediaView(mediaPlayer);
-//	                    mediaView.setOnError(new EventHandler() {
-//	                        public void handle(MediaErrorEvent t) {
-//	                            // Handle asynchronous error in MediaView.
-//	                        }
-//	                    });
+	                   
 	                } else {
 	                    // Handle synchronous error creating MediaPlayer.
 	                }
@@ -163,7 +159,7 @@ public class LDWavPlayer {
 				public void run() {
 					// TODO Auto-generated method stub
 					stop();
-					viewController.setPlayButtonState(true);
+					//viewController.setPlayButtonState(true);
 				}
 	        	
 	        });
@@ -204,11 +200,11 @@ public class LDWavPlayer {
 	}
 	
 	private void onPlay() {
-		mediaPlayer.play();
+		this.play();
 	}
 	
 	private void onStop() {
-		
+		this.stop();
 	}
 	
 	public MediaPlayer getPlayer() {

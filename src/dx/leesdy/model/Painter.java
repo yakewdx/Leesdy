@@ -1,4 +1,4 @@
-package dx.leesdy.view;
+package dx.leesdy.model;
 
 import java.util.ArrayList;
 import java.util.Comparator;

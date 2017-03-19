@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import dx.leesdy.model.layout.LDButton?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+
+<FlowPane id="toppane" style="-fx-background-color: #7f7f7f;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dx.leesdy.view.ToolboxViewController">
+   <children>
+      <ToolBar style="-fx-background-color: #7f7f7f;" stylesheets="@../controller/application.css">
+         <items>
+            <LDButton fx:id="playButton" info="Play" mnemonicParsing="false" onAction="#handlePlay" styleClass="toolbox_button">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../resources/icons/6.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </LDButton>
+            <LDButton fx:id="pauseButton" info="Pause" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handlePause" styleClass="toolbox_button">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../resources/icons/4.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </LDButton>
+            <LDButton fx:id="stopButton" info="Stop" mnemonicParsing="false" onAction="#handleStop">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../resources/icons/11.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </LDButton>
+            <LDButton fx:id="addInfoButton" info="Add info" mnemonicParsing="false" onAction="#handleAdd">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../resources/icons/2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </LDButton>
+         </items>
+      </ToolBar>
+   </children>
+            </FlowPane>

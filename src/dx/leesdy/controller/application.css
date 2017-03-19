@@ -61,12 +61,13 @@
 }
 
 .split-pane:horizontal > .split-pane-divider {
+	-fx-border-width: 1px;
     -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
     -fx-background-color: transparent, derive(#1d1d1d,20%);
 }
 
-.split-pane {
-    -fx-padding: 1 0 0 0;
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 1 0 1;
 }
 
 .menu-bar {
@@ -97,7 +98,7 @@
  * Metro style Push Button
  * Author: Pedro Duque Vieira
  * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
- */
+
 .button {
     -fx-padding: 5 22 5 22;   
     -fx-border-color: #e2e2e2;
@@ -140,6 +141,11 @@
 
 .button:default:hover {
     -fx-background-color: derive(-fx-focus-color,30%);
+}
+*/
+
+.toolbox_button:default {
+	-fx-background-color: #efefef;
 }
 
 .canvas {

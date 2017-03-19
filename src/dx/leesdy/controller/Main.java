@@ -5,34 +5,30 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import dx.leesdy.view.BasicViewController;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import dx.leesdy.player.*;
+import dx.leesdy.model.layout.*;
 import dx.leesdy.utils.LDExecutor;
 
 public class Main extends Application {
 	
 	
-	private static final int POOL_SIZE = 5;
-	private BorderPane root;
-	private Scene scene;
+	private AnchorPane root;
+	private LDScene scene;
 	
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			// init thread pool
-
+			primaryStage.setTitle("Leesdy");
+			primaryStage.getIcons().add(new Image("file:resources/icons/Icon2.png"));
 			setInitScene(primaryStage);
-			setCanvas(primaryStage);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -40,8 +36,24 @@ public class Main extends Application {
 	}
 	
 	public void setInitScene(Stage primaryStage) {
-		root = new BorderPane();
-		scene = new Scene(root,400,200);
+		
+		// Load basic view
+        try {
+        	FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../view/basiclayout.fxml"));
+			AnchorPane BasicView = (AnchorPane) loader.load();
+			root = BasicView;
+			
+			BasicViewController controller = (BasicViewController)loader.getController();
+			controller.setRoot(BasicView);
+			controller.init();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		scene = new LDScene(root);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -54,28 +66,6 @@ public class Main extends Application {
 			}
 			
 		});
-	}
-	
-	public void setCanvas(Stage primaryStage) {
-		try {
-		FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("../view/basiclayout.fxml"));
-        AnchorPane BasicView = (AnchorPane) loader.load();
-        
-        BasicViewController controller = (BasicViewController)loader.getController();
-        
-        root.setCenter(BasicView);
-        // init Media Player
-        LDWavPlayer player = new LDWavPlayer("resources/8k16bitpcm.wav", root);
-        controller.setPlayer(player);
-        player.setViewController(controller);
-        
-        player.initGraphics(controller.getCanvas());
-        
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        
 	}
 	
 	public static void main(String[] args) {

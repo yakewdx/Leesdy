@@ -1,31 +1,18 @@
 package dx.leesdy.view;
 
-import javafx.scene.paint.*;
-import javafx.scene.shape.*;
-import dx.leesdy.player.LDWavPlayer;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import dx.leesdy.controller.Main;
+import dx.leesdy.utils.LDInformationCenter;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 
 public class BasicViewController {
 
-	@FXML
-	private Canvas canvas;
+	private Node root;
 	
-	@FXML
-	private Button playButton;
-	
-	@FXML
-	private Button pauseButton;
-	
-	@FXML
-	private Button StopButton;
-	
-	private LDWavPlayer player;
 	/**
      * The constructor.
      * The constructor is called before the initialize() method.
@@ -40,72 +27,66 @@ public class BasicViewController {
     @FXML
     private void initialize() {
     	
-    	// test drawing
-    	GraphicsContext gc = canvas.getGraphicsContext2D();
+    }
+
+    public void init() {
+    	// todo: initialize other views
     	
-    	gc.setFill(Color.GREEN);
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(5);
-        gc.strokeLine(40, 10, 10, 40);
-        gc.fillOval(10, 60, 30, 30);
-        gc.strokeOval(60, 60, 30, 30);
-        gc.fillRoundRect(110, 60, 30, 30, 10, 10);
-        gc.strokeRoundRect(160, 60, 30, 30, 10, 10);
-        gc.fillArc(10, 110, 30, 30, 45, 240, ArcType.OPEN);
-        
-    	setPlayButtonState(true);
+    	try {
+    		BorderPane mainBorderPane =(BorderPane)(((AnchorPane)root).getChildren().get(0));
+    		BorderPane mainPane = (BorderPane)(mainBorderPane.getChildren().get(0));
+    		
+    		// load canvas view
+    		FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../view/CanvasView.fxml"));
+            AnchorPane canvasView = (AnchorPane) loader.load();
+            mainPane.setCenter(canvasView);
+            CanvasViewController canvasViewController = loader.getController();
+            
+            
+            // load toolbox view
+            loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../view/ToolboxView.fxml"));
+            FlowPane toolboxView = (FlowPane) loader.load();
+            mainPane.setTop(toolboxView);
+            ToolboxViewController toolboxViewController = loader.getController();
+            toolboxViewController.getPlayer().initGraphics(canvasViewController.getCanvas());
+            
+            // load information view
+            loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../view/InformationView.fxml"));
+            AnchorPane informationView = (AnchorPane) loader.load();
+            mainPane.setBottom(informationView);
+            mainPane.setRight(null);
+            InformationViewController informationViewController = loader.getController();
+            LDInformationCenter.getInstance().addObserver(informationViewController);
+            
+            
+            // init Media Player
+            //LDWavPlayer player = new LDWavPlayer("resources/8k16bitpcm.wav", root);
+            //controller.setPlayer(player);
+            //player.setViewController(controller);
+            
+            //player.initGraphics(controller.getCanvas());
+            
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
     }
-    
-    @FXML
-    private void handlePlay() {
-    	// todo: Play wav
-    	System.out.println("Play clicked.");
-    	player.play();
-    	setPlayButtonState(false);
 
-    }
-    
-    @FXML
-    private void handlePause() {
-    	System.out.println("Pause clicked");
-    	this.player.pause();
-    	//this.playButton.setText("Play");
-    	setPlayButtonState(true);
+	/**
+	 * @return the root
+	 */
+	public Node getRoot() {
+		return root;
+	}
 
-    }
+	/**
+	 * @param root the root to set
+	 */
+	public void setRoot(Node root) {
+		this.root = root;
+	}
     
-    // Only for test
-    @FXML
-    private void handleAdd() {
-    	this.player.addPainterComponents();
-    }
-    
-    @FXML
-    private void handleStop() {
-    	// todo: Stop music
-    	System.out.println("Stop clicked.");
-    	this.player.stop();
-    	setPlayButtonState(true);
-    }
-    
-    @FXML
-    private void handleDiarization() {
-    	// todo: diarization
-    	System.out.println("Start Diarization");
-    	this.player.diarization();
-    }
-    
-    public void setPlayer(LDWavPlayer _player) {
-    	this.player = _player;
-    }
-    
-    public Canvas getCanvas() {
-    	return this.canvas;
-    }
-    
-    public void setPlayButtonState(boolean toShowPlay) {
-    	playButton.setVisible(toShowPlay);
-    	pauseButton.setVisible(!toShowPlay);
-    }
     
 }
