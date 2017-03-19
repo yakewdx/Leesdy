@@ -16,7 +16,11 @@ public class WavWrapper {
 		
 		// substring(6) : remove "file:"
 		// or getSource will return file:C:/******
-		fileReader = new LDWavFileReader(_media.getSource().substring(6));
+		fileReader = new LDWavFileReader(_media.getSource().substring(5));
+	}
+	
+	public boolean isSucceeded(){
+		return fileReader.isSuccess();
 	}
 	
 	public void setMedia(Media media) {

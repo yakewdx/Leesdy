@@ -1,6 +1,7 @@
 package dx.leesdy.view;
 
 import dx.leesdy.controller.Main;
+import dx.leesdy.player.LDWavPlayer;
 import dx.leesdy.utils.LDInformationCenter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,7 +51,11 @@ public class BasicViewController {
             FlowPane toolboxView = (FlowPane) loader.load();
             mainPane.setTop(toolboxView);
             ToolboxViewController toolboxViewController = loader.getController();
-            toolboxViewController.getPlayer().initGraphics(canvasViewController.getCanvas());
+            LDWavPlayer player = toolboxViewController.getPlayer();
+            if (player.isInitializationSuceeded()) {
+            	player.initGraphics(canvasViewController.getCanvas());
+            }
+            
             
             // load information view
             loader = new FXMLLoader();

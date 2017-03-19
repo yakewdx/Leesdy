@@ -36,12 +36,18 @@ public class LDWavPlayer {
 	private Painter painter;
 	private LDDiarizationResultReader reader;
 	
+	private boolean isInitializationSucceeded;
 	// For test
 	private String DiarizationOutput = "showName.seg";
 	
 	public LDWavPlayer(String filename) {
+		this.isInitializationSucceeded = false;
 		source = filename;
 		initPlayer();
+	}
+	
+	public boolean isInitializationSuceeded() {
+		return isInitializationSucceeded;
 	}
 	
 	public void setViewController(BasicViewController controller) {
@@ -87,12 +93,16 @@ public class LDWavPlayer {
 	}
 	
 	public void addPainterComponents() {
-		if (reader != null) {
-			painter.addComponent(new PDrawDiarizationResult(4, wav, this, reader));
+		if (painter != null) {
+			if (reader != null) {
+				painter.addComponent(new PDrawDiarizationResult(4, wav, this, reader));
+			} else {
+				reader = new LDDiarizationResultReader(DiarizationOutput);
+				painter.addComponent(new PDrawDiarizationResult(4, wav, this, reader));
+				System.out.println("Reader is NULL.");
+			}
 		} else {
-			reader = new LDDiarizationResultReader(DiarizationOutput);
-			painter.addComponent(new PDrawDiarizationResult(4, wav, this, reader));
-			System.out.println("Reader is NULL.");
+			System.out.println("Painter is null.");
 		}
 	}
 	
@@ -110,17 +120,22 @@ public class LDWavPlayer {
 	                
 	                // Set media to wavWrapper
 	                wav = new WavWrapper(media);
+	                if (wav.isSucceeded())
+	                this.isInitializationSucceeded = true;
 	                
+
 	                if (mediaPlayer.getError() == null) {
 	                    mediaPlayer.setOnError(new Runnable() {
 	                        public void run() {
 	                            // Handle asynchronous error in MediaPlayer object.
 	                        }
 	                    });
-	                   
+	               
 	                } else {
 	                    // Handle synchronous error creating MediaPlayer.
 	                }
+	                
+	                
 	            } catch (Exception mediaPlayerException) {
 	                // Handle exception in MediaPlayer constructor.
 	            	mediaPlayerException.printStackTrace();

@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 
 public abstract class PainterComponent implements Comparable<PainterComponent> {
 
+	static private int idCount = 0;
 	// id
 	private int id;
 	// Priority
@@ -11,6 +12,7 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 	
 	public PainterComponent(int priority) {
 		this.priority = priority;
+		this.id = idCount++;
 	}
 	
 	@Override
@@ -21,4 +23,15 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 	
 	public abstract void paint(Canvas canvas);
 	
+	public int getId() {
+		return this.id;
+	}
+	
+	public int getPriority() {
+		return this.priority;
+	}
+	
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
 }

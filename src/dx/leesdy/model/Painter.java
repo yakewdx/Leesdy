@@ -51,4 +51,22 @@ public class Painter implements Runnable {
 		});
 		
 	}
+	
+	public PainterComponent getComponentById(int id) {
+		for (PainterComponent pc : list) {
+			if (pc.getId() == id) {
+				return pc;
+			}
+		}
+		return null;
+	}
+	
+	public boolean removeComponentById(int id) {
+		PainterComponent pc = this.getComponentById(id);
+		if (pc != null) {
+			list.remove(pc);
+			return true;
+		}
+		else return false;
+	}
 }
