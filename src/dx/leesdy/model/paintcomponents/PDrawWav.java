@@ -1,17 +1,8 @@
 package dx.leesdy.model.paintcomponents;
 
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.media.Media;
-import javafx.scene.media.Track;
 import javafx.scene.paint.Color;
-
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 import dx.leesdy.model.*;
 
 public class PDrawWav extends PainterComponent {

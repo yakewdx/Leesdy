@@ -6,12 +6,10 @@ import javafx.event.EventHandler;
 import javafx.util.Duration;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaMarkerEvent;
 import javafx.scene.media.MediaPlayer;
-import dx.leesdy.view.BasicViewController;
 import dx.leesdy.model.*;
 import dx.leesdy.model.paintcomponents.PDrawDiarizationResult;
 import dx.leesdy.model.paintcomponents.PDrawPlaybackState;
@@ -32,13 +30,12 @@ public class LDWavPlayer {
 	private Media media;
 	private WavWrapper wav;
 	private MediaPlayer mediaPlayer;
-	private BasicViewController viewController;
 	private Painter painter;
 	private LDDiarizationResultReader reader;
 	
 	private boolean isInitializationSucceeded;
 	// For test
-	private String DiarizationOutput = "showName.seg";
+	private String DiarizationOutput = "showName.out.seg";
 	
 	public LDWavPlayer(String filename) {
 		this.isInitializationSucceeded = false;
@@ -48,10 +45,6 @@ public class LDWavPlayer {
 	
 	public boolean isInitializationSuceeded() {
 		return isInitializationSucceeded;
-	}
-	
-	public void setViewController(BasicViewController controller) {
-		viewController = controller;
 	}
 	
 	public void initGraphics(Canvas canvas) {

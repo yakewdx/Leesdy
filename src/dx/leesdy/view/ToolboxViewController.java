@@ -9,11 +9,8 @@ package dx.leesdy.view;
 import dx.leesdy.model.layout.LDButton;
 import dx.leesdy.player.LDWavPlayer;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
-/**
- * 
- */
+
 public class ToolboxViewController {
 
 	
@@ -34,7 +31,7 @@ public class ToolboxViewController {
 	
 	@FXML
 	private void initialize() {
-		player = new LDWavPlayer("resources/8k16bitpcm.wav");
+		player = new LDWavPlayer("resources/output.wav");
 	}
 	
 	

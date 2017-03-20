@@ -1,8 +1,5 @@
 package dx.leesdy.model;
 
-import java.io.*;
-import java.util.ArrayList;
-
 import dx.leesdy.utils.*;
 import javafx.scene.media.Media;
 

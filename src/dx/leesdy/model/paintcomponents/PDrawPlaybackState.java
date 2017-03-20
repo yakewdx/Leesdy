@@ -1,12 +1,10 @@
 package dx.leesdy.model.paintcomponents;
 
-import com.sun.javafx.binding.StringFormatter;
 
 import dx.leesdy.model.WavWrapper;
 import dx.leesdy.player.LDWavPlayer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.paint.Color;
