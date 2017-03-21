@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -27,6 +28,9 @@ public class CanvasViewController {
 	
 	@FXML
 	private SplitPane splitPane;
+	
+	@FXML
+	private ScrollPane scrollPane;
 	
 	@FXML
 	private Pane pane;
@@ -47,7 +51,7 @@ public class CanvasViewController {
     }
 	
 	public CanvasViewController() {
-		canvas = new LDMultiLayerCanvas(400,200);
+		canvas = new LDMultiLayerCanvas(1000,200);
 		
 	}
 }

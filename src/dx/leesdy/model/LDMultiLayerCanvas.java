@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import dx.leesdy.model.layout.LDCanvas;
 import dx.leesdy.utils.LDCanvasFactory;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 /**
  * 
@@ -64,7 +66,7 @@ public class LDMultiLayerCanvas {
 		return pane;
 	}
 	/**
-	 * @param pane the pane to set
+	 * @param pane2 the pane to set
 	 */
 	public void setPane(Pane pane) {
 		this.pane = pane;

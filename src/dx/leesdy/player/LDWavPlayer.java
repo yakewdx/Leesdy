@@ -26,12 +26,13 @@ import dx.leesdy.utils.*;
 public class LDWavPlayer {
 	
 	// filename
-	private String source;
-	private Media media;
-	private WavWrapper wav;
+	//	private String source;
+	//	private Media media;
+	//	private WavWrapper wav;
 	private MediaPlayer mediaPlayer;
+	private LDStatusCenter statusCenter;
 	private Painter painter;
-	private LDDiarizationResultReader reader;
+	//	private LDDiarizationResultReader reader;
 	
 	private boolean isInitializationSucceeded;
 	// For test
@@ -39,7 +40,8 @@ public class LDWavPlayer {
 	
 	public LDWavPlayer(String filename) {
 		this.isInitializationSucceeded = false;
-		source = filename;
+		this.statusCenter = new LDStatusCenter(filename);
+		//this.statusCenter.getSource(). source = filename;
 		initPlayer();
 	}
 	
@@ -51,9 +53,11 @@ public class LDWavPlayer {
 		// TODO Auto-generated method stub
 		
 		painter = new Painter(ldmlCanvas);
-		painter.addComponent(new PDrawVerticalLine(6,wav,this));
-		painter.addComponent(new PDrawWav(3, wav));
-		painter.addComponent(new PDrawPlaybackState(5,wav,this));
+		// 
+		painter.addComponent(new PDrawVerticalLine(6, this.statusCenter));
+		painter.addComponent(new PDrawWav(3, this.statusCenter));
+		
+		painter.addComponent(new PDrawPlaybackState(5, this.statusCenter));
 		
 		LDExecutor.getExecutor().scheduleWithFixedDelay(painter,10,100,TimeUnit.MILLISECONDS);
 		//painter.run();
@@ -61,13 +65,16 @@ public class LDWavPlayer {
 	
 	public void addPainterComponents() {
 		if (painter != null) {
-			if (reader != null) {
-				painter.addComponent(new PDrawDiarizationResult(4, wav, this, reader));
+			if (this.statusCenter.getReader() != null) {
+				painter.addComponent(new PDrawDiarizationResult(4, this.statusCenter));
 			} else {
-				reader = new LDDiarizationResultReader(DiarizationOutput);
-				painter.addComponent(new PDrawDiarizationResult(4, wav, this, reader));
+				LDDiarizationResultReader reader = new LDDiarizationResultReader(DiarizationOutput);
+				this.statusCenter.setReader(reader);
+				painter.addComponent(new PDrawDiarizationResult(4, this.statusCenter));
 				System.out.println("Reader is NULL.");
 			}
+			PDrawVerticalLine pc = (PDrawVerticalLine) painter.getComponentById(0);
+			pc.setShowDiarizationResult(true);
 		} else {
 			System.out.println("Painter is null.");
 		}
@@ -75,7 +82,8 @@ public class LDWavPlayer {
 	
 	private void initPlayer() {
 		try {
-	        media = new Media(new File(source).toURI().toString());
+			String source = this.statusCenter.getSouceFile();
+			Media media = new Media(new File(source).toURI().toString());
 	        if (media.getError() == null) {
 	            media.setOnError(new Runnable() {
 	                public void run() {
@@ -83,10 +91,10 @@ public class LDWavPlayer {
 	                }
 	            });
 	            try {
-	                mediaPlayer = new MediaPlayer(media);
+	            	mediaPlayer = new MediaPlayer(media);
 	                
 	                // Set media to wavWrapper
-	                wav = new WavWrapper(media);
+	                WavWrapper wav = new WavWrapper(source);
 	                if (wav.isSucceeded())
 	                this.isInitializationSucceeded = true;
 	                
@@ -102,6 +110,8 @@ public class LDWavPlayer {
 	                    // Handle synchronous error creating MediaPlayer.
 	                }
 	                
+	                this.statusCenter.setMediaPlayer(mediaPlayer);
+	                this.statusCenter.setSource(wav);
 	                
 	            } catch (Exception mediaPlayerException) {
 	                // Handle exception in MediaPlayer constructor.
@@ -112,6 +122,7 @@ public class LDWavPlayer {
 	        }
 	        //mRoot.getChildren().add(mediaView);
 	        
+	        MediaPlayer mediaPlayer = this.statusCenter.getMediaPlayer();
 	        // Set listener
 	        mediaPlayer.setOnMarker(new EventHandler<MediaMarkerEvent>() {
 
@@ -174,8 +185,9 @@ public class LDWavPlayer {
 			public void run() {
 				// TODO Auto-generated method stub
 				String output = DiarizationOutput;
-				new LDDiarization(source, output).diarization();
-				reader = new LDDiarizationResultReader(output);
+				new LDDiarization(statusCenter.getSouceFile(), output).diarization();
+				LDDiarizationResultReader reader = new LDDiarizationResultReader(output);
+				statusCenter.setReader(reader);
 			}
 			
 		});

@@ -67,8 +67,11 @@ public class Painter implements Runnable {
 				pc.setCanvas(canvas.getLayerAtIndex(i));
 			}
 			if (pc.needToUpdate()) {
+				System.out.println(pc.getClass().toString() + " is going to update");
 				pc.clearCanvas();
 				pc.update();
+			} else {
+				System.out.println(pc.getClass().toString() + " will not be updated");
 			}
 		}
 		

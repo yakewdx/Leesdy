@@ -7,6 +7,7 @@
  */
 package dx.leesdy.model.paintcomponents;
 
+import dx.leesdy.model.LDStatusCenter;
 import javafx.scene.canvas.Canvas;
 
 /**
@@ -15,8 +16,8 @@ import javafx.scene.canvas.Canvas;
  */
 public class PTestOutput extends PainterComponent {
 
-	public PTestOutput(int priority) {
-		super(priority);
+	public PTestOutput(int priority, LDStatusCenter statusCenter) {
+		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
 	}
 

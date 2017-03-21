@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
+
 import dx.leesdy.utils.LDSegment;
 /**
  * 
@@ -20,10 +22,31 @@ public class LDDiarizationResultReader {
 
 	private ArrayList<LDSegment> list;
 	
+	private boolean sorted;
+	
 	public LDDiarizationResultReader(String filename) {
 		this.segmentFile = filename;
 		this.list = new ArrayList<LDSegment>();
 		this.readSegmentFromFile();
+		this.sorted = false;
+	}
+	
+	public void sortList() {
+		if (!this.sorted) {
+			list.sort(new Comparator<LDSegment> () {
+	
+				@Override
+				public int compare(LDSegment o1, LDSegment o2) {
+					// TODO Auto-generated method stub
+					return o1.getStartPos() < o2.getStartPos() ? -1 : 1;
+				}
+				
+			});
+		}
+	}
+	
+	public boolean isSorted() {
+		return this.sorted;
 	}
 	
 	
@@ -94,12 +117,36 @@ public class LDDiarizationResultReader {
 								  			    speakerLabel));
 				}
 			}
+			
+			this.sortList();
 				
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public LDSegment searchIntervalByTime(double time) {
+		
+		// Sort the list first
+		// if it has already been sorted,
+		// the procedure will be skipped in the function.
+		this.sortList();
+		
+		// BiSearch 
+		int begin = 0, end = this.list.size();
+		int mid = 0;
+		while (begin < end) {
+			mid = (begin + end) / 2;
+			if (this.list.get(mid).getStartPos() < time) {
+				begin = mid + 1;
+			} else {
+				end = mid;
+			}
+			
+		}
+		return this.list.get(begin-1);
 	}
 	
 	/**

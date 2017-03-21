@@ -10,14 +10,10 @@ public class PDrawWav extends PainterComponent {
 	protected WavWrapper wav;
 	protected int [][] data;
 	
-	public PDrawWav(int priority) {
-		super(priority);
+	public PDrawWav(int priority, LDStatusCenter statusCenter) {
+		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
-	}
-	
-	public PDrawWav(int priority, WavWrapper wrapper) {
-		super(priority);
-		wav = wrapper;
+		wav = statusCenter.getSource();
 		init();
 	}
 	
@@ -66,7 +62,11 @@ public class PDrawWav extends PainterComponent {
 	@Override
 	public void updateState() {
 		// TODO Auto-generated method stub
+		
 		this.setNeedToUpdate(false);
+		if (this.getDrawingCount() == 0) {
+			this.setNeedToUpdate();
+		}
 	}
 
 }

@@ -1,6 +1,9 @@
 package dx.leesdy.model.paintcomponents;
 
 import java.util.*;
+
+import dx.leesdy.model.LDStatusCenter;
+
 import java.text.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -8,8 +11,8 @@ import javafx.scene.canvas.GraphicsContext;
 public class PTimer extends PainterComponent {
 
 	
-	public PTimer(int priority) {
-		super(priority);
+	public PTimer(int priority, LDStatusCenter statusCenter) {
+		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
 	}
 	

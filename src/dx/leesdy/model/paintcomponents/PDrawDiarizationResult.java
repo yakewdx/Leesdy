@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Consumer;
 
+import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.model.WavWrapper;
 import dx.leesdy.player.LDWavPlayer;
 import dx.leesdy.utils.LDDiarizationResultReader;
@@ -36,18 +37,13 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 	/**
 	 * @param priority
 	 */
-	public PDrawDiarizationResult(int priority) {
-		super(priority);
+	public PDrawDiarizationResult(int priority, LDStatusCenter statusCenter) {
+		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
-		this.list = new ArrayList<LDSegment>();
+		this.list = this.statusCenter.getReader().getList();
 		init();
 	}
 	
-	public PDrawDiarizationResult(int priority, WavWrapper wav, LDWavPlayer player, LDDiarizationResultReader reader) {
-		super(priority, wav, player);
-		this.list = reader.getList();
-		init();
-	}
 	
 	private void init() {
 		colors = new HashMap<String, Color>();
@@ -63,7 +59,7 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 		// TODO Auto-generated method stub
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		
-		MediaPlayer pl = player.getPlayer();
+		MediaPlayer pl = player;
 		Duration mediaLength = pl.getTotalDuration();
 		Double totalTime = mediaLength.toSeconds();
 		double canvasWidth = canvas.getWidth();
@@ -89,14 +85,14 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 			gc.setStroke(colors.get(speakerLabel));
 			gc.setFill(colors.get(speakerLabel));
 			gc.setLineWidth(1.0);
-			gc.strokeLine(startpos, 0, startpos, canvasHeight);
-			gc.strokeLine(endpos, 0, endpos, canvasHeight);
+			gc.strokeLine(startpos, 40, startpos, canvasHeight - 40);
+			gc.strokeLine(endpos, 40, endpos, canvasHeight - 40);
 			gc.setGlobalAlpha(0.5);
-			gc.fillRect(startpos, 0, (endpos - startpos), canvasHeight);
+			gc.fillRect(startpos, 40, (endpos - startpos), canvasHeight - 80);
 			gc.setGlobalAlpha(1.0);
 			
-			gc.setFill(Color.WHITE);
-			gc.fillText(speakerLabel, startpos + 2, 13);
+			//gc.setFill(Color.WHITE);
+			//gc.fillText(speakerLabel, startpos + 2, 13);
 		}
 
 	}

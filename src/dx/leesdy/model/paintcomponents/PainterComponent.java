@@ -1,11 +1,14 @@
 package dx.leesdy.model.paintcomponents;
 
+import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.model.layout.LDCanvas;
 import javafx.scene.canvas.Canvas;
 
 public abstract class PainterComponent implements Comparable<PainterComponent> {
 
 	private LDCanvas canvas;
+	
+	private long drawingCount;
 	
 	static private int idCount = 0;
 	// id
@@ -15,10 +18,14 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 	
 	private boolean needToUpdate;
 	
-	public PainterComponent(int priority) {
+	protected LDStatusCenter statusCenter;
+	
+	public PainterComponent(int priority, LDStatusCenter statusCenter) {
+		this.setStatusCenter(statusCenter);
 		needToUpdate = false;
 		this.priority = priority;
 		this.id = idCount++;
+		this.setDrawingCount(0);
 	}
 	
 	@Override
@@ -36,6 +43,7 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 	public void update() {
 		paint(canvas);
 		needToUpdate = false;
+		this.setDrawingCount(this.getDrawingCount() + 1);
 	}
 	
 	public abstract void paint(Canvas canvas);
@@ -78,5 +86,21 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 	public void setCanvas(LDCanvas canvas) {
 		this.canvas = canvas;
 		this.needToUpdate = true;
+	}
+
+	public LDStatusCenter getStatusCenter() {
+		return statusCenter;
+	}
+
+	public void setStatusCenter(LDStatusCenter statusCenter) {
+		this.statusCenter = statusCenter;
+	}
+
+	public long getDrawingCount() {
+		return drawingCount;
+	}
+
+	public void setDrawingCount(long drawingCount) {
+		this.drawingCount = drawingCount;
 	}
 }

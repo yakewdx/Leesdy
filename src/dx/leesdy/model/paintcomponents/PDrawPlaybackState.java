@@ -1,6 +1,7 @@
 package dx.leesdy.model.paintcomponents;
 
 
+import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.model.WavWrapper;
 import dx.leesdy.player.LDWavPlayer;
 import javafx.scene.canvas.Canvas;
@@ -12,30 +13,21 @@ import javafx.util.Duration;
 
 public class PDrawPlaybackState extends PDrawWav {
 
-	protected LDWavPlayer player;
+	protected MediaPlayer player;
 	
-	public PDrawPlaybackState(int priority) {
-		super(priority);
+	public PDrawPlaybackState(int priority, LDStatusCenter statusCenter) {
+		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
+		this.player = this.statusCenter.getMediaPlayer();
 	}
 	
-	public void setPlayer(LDWavPlayer player) {
-		this.player = player;
-	}
-	
-	public PDrawPlaybackState(int priority, WavWrapper wav, LDWavPlayer player) {
-		super(priority, wav);
-		// TODO Auto-generated constructor stub
-		this.player = player;
-	}
-
 	@Override
 	public void paint(Canvas canvas) {
 		// TODO Auto-generated method stub
 		if (this.wav != null && this.player != null) {
-			Status status = this.player.getPlayer().getStatus();
+			Status status = this.player.getStatus();
 			if (status == Status.PLAYING || status == Status.PAUSED) {
-				MediaPlayer pl = player.getPlayer();
+				MediaPlayer pl = player;
 				Duration curTime = pl.getCurrentTime();
 				Duration mediaLength = pl.getTotalDuration();
 				Double time = curTime.toSeconds();
@@ -61,7 +53,7 @@ public class PDrawPlaybackState extends PDrawWav {
 	@Override
 	public void updateState() {
 		if (this.wav != null && this.player != null) {
-			Status status = this.player.getPlayer().getStatus();
+			Status status = this.player.getStatus();
 			if (status == Status.PLAYING) {
 				this.setNeedToUpdate(true);
 			}
