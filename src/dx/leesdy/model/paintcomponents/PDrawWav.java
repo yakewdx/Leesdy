@@ -60,4 +60,13 @@ public class PDrawWav extends PainterComponent {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see dx.leesdy.model.paintcomponents.PainterComponent#updateState()
+	 */
+	@Override
+	public void updateState() {
+		// TODO Auto-generated method stub
+		this.setNeedToUpdate(false);
+	}
+
 }

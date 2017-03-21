@@ -23,4 +23,9 @@ public class PTimer extends PainterComponent {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.fillText(s, 10, 10);                    
 	}
+	
+	@Override
+	public void updateState() {
+		this.setNeedToUpdate();
+	}
 }

@@ -6,6 +6,7 @@
  */
 package dx.leesdy.view;
 
+import dx.leesdy.model.LDMultiLayerCanvas;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -33,34 +34,20 @@ public class CanvasViewController {
 	@FXML
 	private ListView<Pane> listView;
 
-	private Canvas canvas;
+	private LDMultiLayerCanvas canvas;
 	
 	@FXML
     private void initialize() {
-    	
-		pane.getChildren().add(canvas);
-		
-    	// test drawing
-    	GraphicsContext gc = canvas.getGraphicsContext2D();
-    	
-    	gc.setFill(Color.GREEN);
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(5);
-        gc.strokeLine(40, 10, 10, 40);
-        gc.fillOval(10, 60, 30, 30);
-        gc.strokeOval(60, 60, 30, 30);
-        gc.fillRoundRect(110, 60, 30, 30, 10, 10);
-        gc.strokeRoundRect(160, 60, 30, 30, 10, 10);
-        gc.fillArc(10, 110, 30, 30, 45, 240, ArcType.OPEN);
-        
+		canvas.setPane(pane);
     	//setPlayButtonState(true);
     }
 	
-	public Canvas getCanvas() {
+	public LDMultiLayerCanvas getCanvas() {
     	return this.canvas;
     }
 	
 	public CanvasViewController() {
-		canvas = new Canvas(400,200);
+		canvas = new LDMultiLayerCanvas(400,200);
+		
 	}
 }

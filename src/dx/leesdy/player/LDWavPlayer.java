@@ -4,13 +4,13 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaMarkerEvent;
 import javafx.scene.media.MediaPlayer;
 import dx.leesdy.model.*;
+import dx.leesdy.model.layout.LDCanvas;
 import dx.leesdy.model.paintcomponents.PDrawDiarizationResult;
 import dx.leesdy.model.paintcomponents.PDrawPlaybackState;
 import dx.leesdy.model.paintcomponents.PDrawVerticalLine;
@@ -47,42 +47,16 @@ public class LDWavPlayer {
 		return isInitializationSucceeded;
 	}
 	
-	public void initGraphics(Canvas canvas) {
+	public void initGraphics(LDMultiLayerCanvas ldmlCanvas) {
 		// TODO Auto-generated method stub
 		
-		MouseState ms = DeviceState.getInstance().getMouseState();
-		canvas.setOnMouseMoved(new EventHandler<MouseEvent> () {
-
-			@Override
-			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
-				//System.out.println("Mouse Moved");
-				ms.setMouseInCanvas(true);
-				ms.setX(event.getX());
-				ms.setY(event.getY());
-			}
-			
-		});
-		
-		canvas.setOnMouseExited(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
-				ms.setMouseInCanvas(false);
-				ms.setX(event.getX());
-				ms.setY(event.getY());
-			}
-			
-		});
-		
-		painter = new Painter(canvas);
+		painter = new Painter(ldmlCanvas);
 		painter.addComponent(new PDrawVerticalLine(6,wav,this));
 		painter.addComponent(new PDrawWav(3, wav));
 		painter.addComponent(new PDrawPlaybackState(5,wav,this));
 		
 		LDExecutor.getExecutor().scheduleWithFixedDelay(painter,10,100,TimeUnit.MILLISECONDS);
-		
+		//painter.run();
 	}
 	
 	public void addPainterComponents() {

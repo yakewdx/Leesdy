@@ -30,4 +30,8 @@ public class PTestOutput extends PainterComponent {
 		System.out.println("Test : updating...");
 	}
 
+	@Override
+	public void updateState() {
+		this.setNeedToUpdate(false);
+	}
 }

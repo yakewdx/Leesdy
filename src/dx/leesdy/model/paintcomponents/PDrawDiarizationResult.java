@@ -100,5 +100,10 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 		}
 
 	}
+	
+	@Override
+	public void updateState() {
+		this.setNeedToUpdate(false);
+	}
 
 }

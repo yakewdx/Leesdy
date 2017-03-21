@@ -57,5 +57,15 @@ public class PDrawPlaybackState extends PDrawWav {
 		}
 		
 	}
+	
+	@Override
+	public void updateState() {
+		if (this.wav != null && this.player != null) {
+			Status status = this.player.getPlayer().getStatus();
+			if (status == Status.PLAYING) {
+				this.setNeedToUpdate(true);
+			}
+		}
+	}
 
 }

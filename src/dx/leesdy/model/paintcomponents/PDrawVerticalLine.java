@@ -42,5 +42,13 @@ public class PDrawVerticalLine extends PDrawPlaybackState {
 		}
 		
 	}
+	
+	@Override
+	public void updateState() {
+		MouseState ms = DeviceState.getInstance().getMouseState();
+		if (ms.isMouseInCanvas()) {
+			this.setNeedToUpdate();
+		}
+	}
 
 }

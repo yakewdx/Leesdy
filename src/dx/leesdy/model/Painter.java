@@ -10,15 +10,27 @@ public class Painter implements Runnable {
 
 	private ArrayList<PainterComponent> list;
 	
-	private Canvas canvas;
+	private LDMultiLayerCanvas canvas;
 	
-	public Painter(Canvas canvas){
+	public Painter(LDMultiLayerCanvas canvas){
 		this.canvas = canvas;
 		list = new ArrayList<PainterComponent>();
 	};
 	
+	
+	/**
+	 * 
+	 * @param pc
+	 * @return this
+	 * 
+	 * Add a painter component to painter's list
+	 * and assign a new layer
+	 * 
+	 */
 	public Painter addComponent(PainterComponent pc) {
 		list.add(pc);
+		pc.setCanvas(canvas.createNewLayer());
+		
 		return this;
 	}
 	
@@ -45,10 +57,20 @@ public class Painter implements Runnable {
 			}
 			
 		});
-		canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		list.forEach(component -> {
-			component.paint(canvas);
-		});
+		
+		
+		
+		for (int i = 0; i < list.size(); i++) {
+			PainterComponent pc =  list.get(i);
+			pc.updateState();
+			if (pc.getCanvas() != canvas.getLayerAtIndex(i)) {
+				pc.setCanvas(canvas.getLayerAtIndex(i));
+			}
+			if (pc.needToUpdate()) {
+				pc.clearCanvas();
+				pc.update();
+			}
+		}
 		
 	}
 	
