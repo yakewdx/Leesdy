@@ -9,13 +9,14 @@ package dx.leesdy.view;
 import java.util.Observable;
 import java.util.Observer;
 
+import dx.leesdy.utils.LDInitilizableComponent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 /**
  * 
  */
-public class InformationViewController implements Observer {
+public class InformationViewController implements Observer, LDInitilizableComponent {
 
 	@FXML
 	private Label label;
@@ -36,6 +37,12 @@ public class InformationViewController implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
 		this.label.setText((String)arg1);
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

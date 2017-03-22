@@ -6,7 +6,9 @@
  */
 package dx.leesdy.view;
 
+import dx.leesdy.controller.LDControlCenter;
 import dx.leesdy.model.LDMultiLayerCanvas;
+import dx.leesdy.utils.LDInitilizableComponent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -21,7 +23,9 @@ import javafx.scene.shape.ArcType;
 /**
  * 
  */
-public class CanvasViewController {
+public class CanvasViewController implements LDInitilizableComponent{
+	
+	private LDControlCenter controlCenter;
 	
 	@FXML
 	private AnchorPane anchorPane;
@@ -37,21 +41,34 @@ public class CanvasViewController {
 	
 	@FXML
 	private ListView<Pane> listView;
-
-	private LDMultiLayerCanvas canvas;
 	
 	@FXML
     private void initialize() {
-		canvas.setPane(pane);
     	//setPlayButtonState(true);
     }
 	
-	public LDMultiLayerCanvas getCanvas() {
-    	return this.canvas;
-    }
+//	public LDMultiLayerCanvas getCanvas() {
+//    	return this.canvas;
+//    }
 	
 	public CanvasViewController() {
-		canvas = new LDMultiLayerCanvas(1000,200);
+
+		//canvas = new LDMultiLayerCanvas(2000,200);
 		
 	}
+
+	public LDControlCenter getControlCenter() {
+		return controlCenter;
+	}
+
+	public void setControlCenter(LDControlCenter controlCenter) {
+		this.controlCenter = controlCenter;
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		this.controlCenter.getCanvas().setPane(pane);
+	}
+	
 }

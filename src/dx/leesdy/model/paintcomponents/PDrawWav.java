@@ -38,10 +38,21 @@ public class PDrawWav extends PainterComponent {
 			int length = data[0].length;
 			int step = (int) (length / canvasWidth);
 			double k = canvasHeight / 2.0 / 32768.0;
-			int x = 0, y = 0, prevX = 0, prevY = 0;
-			for (int i = 0; i < canvasWidth; ++i) {
-				x = i;
-				y = (int) (canvasHeight - (int)(data[0][i*step]*k + canvasHeight/2));
+			double x = 0, y = 0, prevX = 0, prevY = 0;
+//			for (int i = 0; i < canvasWidth; ++i) {
+//				x = i;
+//				y = (int) (canvasHeight - (int)(data[0][i*step]*k + canvasHeight/2));
+//				
+//				if (i != 0) {
+//					gc.strokeLine(x, y, prevX, prevY);
+//				}
+//				
+//				prevX = x;
+//				prevY = y;
+//			}
+			for (int i = 0; i < length; i++) {
+				x = (double) i / (double)length * canvasWidth;
+				y = canvasHeight - (data[0][i] * k + canvasHeight / 2);
 				
 				if (i != 0) {
 					gc.strokeLine(x, y, prevX, prevY);

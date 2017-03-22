@@ -34,6 +34,14 @@ public class LDWavPlayer {
 	private Painter painter;
 	//	private LDDiarizationResultReader reader;
 	
+	public Painter getPainter() {
+		return painter;
+	}
+
+	public void setPainter(Painter painter) {
+		this.painter = painter;
+	}
+
 	private boolean isInitializationSucceeded;
 	// For test
 	private String DiarizationOutput = "showName.out.seg";
@@ -51,8 +59,6 @@ public class LDWavPlayer {
 	
 	public void initGraphics(LDMultiLayerCanvas ldmlCanvas) {
 		// TODO Auto-generated method stub
-		
-		painter = new Painter(ldmlCanvas);
 		// 
 		painter.addComponent(new PDrawVerticalLine(6, this.statusCenter));
 		painter.addComponent(new PDrawWav(3, this.statusCenter));

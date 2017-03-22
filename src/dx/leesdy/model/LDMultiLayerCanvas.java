@@ -48,7 +48,7 @@ public class LDMultiLayerCanvas {
 	public LDCanvas createNewLayer() {
 		LDCanvas canvas = LDCanvasFactory.getFactory().createCanvasWithSize(width, height);
 		layers.add(canvas);
-		pane.getChildren().add(canvas);
+		if (pane != null) pane.getChildren().add(canvas);
 		return canvas;
 	}
 	
@@ -66,9 +66,12 @@ public class LDMultiLayerCanvas {
 		return pane;
 	}
 	/**
-	 * @param pane2 the pane to set
+	 * @param pane the pane to set
 	 */
 	public void setPane(Pane pane) {
 		this.pane = pane;
+		for (LDCanvas layer : layers) {
+			this.pane.getChildren().add(layer);
+		}
 	}
 }

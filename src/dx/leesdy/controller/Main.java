@@ -44,8 +44,14 @@ public class Main extends Application {
 			AnchorPane BasicView = (AnchorPane) loader.load();
 			root = BasicView;
 			
+			// init control center
+			LDControlCenter controlCenter = new LDControlCenter();
+			controlCenter.init();
+			
 			BasicViewController controller = (BasicViewController)loader.getController();
 			controller.setRoot(BasicView);
+			controller.setControlCenter(controlCenter);
+			
 			controller.init();
 			
 		} catch (IOException e) {

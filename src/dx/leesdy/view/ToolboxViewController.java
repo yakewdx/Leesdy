@@ -6,13 +6,16 @@
  */
 package dx.leesdy.view;
 
+import dx.leesdy.controller.LDControlCenter;
 import dx.leesdy.model.layout.LDButton;
 import dx.leesdy.player.LDWavPlayer;
+import dx.leesdy.utils.LDInitilizableComponent;
 import javafx.fxml.FXML;
 
 
-public class ToolboxViewController {
+public class ToolboxViewController implements LDInitilizableComponent{
 
+	private LDControlCenter controlCenter;
 	
 	private LDWavPlayer player;
 	
@@ -31,7 +34,7 @@ public class ToolboxViewController {
 	
 	@FXML
 	private void initialize() {
-		player = new LDWavPlayer("resources/output.wav");
+		//player = new LDWavPlayer("resources/output.wav");
 	}
 	
 	
@@ -83,5 +86,25 @@ public class ToolboxViewController {
     public LDWavPlayer getPlayer() {
     	return player;
     }
+
+
+
+	public LDControlCenter getControlCenter() {
+		return controlCenter;
+	}
+
+
+
+	public void setControlCenter(LDControlCenter controlCenter) {
+		this.controlCenter = controlCenter;
+	}
+
+
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		this.player = this.controlCenter.getPlayer();
+	}
     
 }
