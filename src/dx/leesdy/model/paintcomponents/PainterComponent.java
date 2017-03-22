@@ -20,12 +20,23 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 	
 	protected LDStatusCenter statusCenter;
 	
+	protected String name;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public PainterComponent(int priority, LDStatusCenter statusCenter) {
 		this.setStatusCenter(statusCenter);
 		needToUpdate = false;
 		this.priority = priority;
 		this.id = idCount++;
 		this.setDrawingCount(0);
+		this.name = "";
 	}
 	
 	@Override
@@ -43,7 +54,7 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 	public void update() {
 		paint(canvas);
 		needToUpdate = false;
-		this.setDrawingCount(this.getDrawingCount() + 1);
+		this.drawingCount++;
 	}
 	
 	public abstract void paint(Canvas canvas);

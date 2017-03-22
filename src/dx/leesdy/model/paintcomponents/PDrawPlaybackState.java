@@ -19,6 +19,7 @@ public class PDrawPlaybackState extends PDrawWav {
 		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
 		this.player = this.statusCenter.getMediaPlayer();
+		this.name = "PDrawPlaybackState";
 	}
 	
 	@Override

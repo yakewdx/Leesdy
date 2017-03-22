@@ -19,6 +19,7 @@ public class PTestOutput extends PainterComponent {
 	public PTestOutput(int priority, LDStatusCenter statusCenter) {
 		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
+		this.name = "PTestOutput";
 	}
 
 	/* (non-Javadoc)

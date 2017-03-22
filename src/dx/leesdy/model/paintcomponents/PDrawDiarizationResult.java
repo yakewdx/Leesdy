@@ -42,12 +42,13 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 		// TODO Auto-generated constructor stub
 		this.list = this.statusCenter.getReader().getList();
 		init();
+		
 	}
 	
 	
 	private void init() {
 		colors = new HashMap<String, Color>();
-
+		this.name = "PDrawDiarizationResult";
 	}
 
 	

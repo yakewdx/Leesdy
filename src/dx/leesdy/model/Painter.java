@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import dx.leesdy.model.paintcomponents.PainterComponent;
+import dx.leesdy.utils.LDDebug;
 import javafx.scene.canvas.Canvas;
 
 public class Painter implements Runnable {
@@ -32,6 +33,27 @@ public class Painter implements Runnable {
 		pc.setCanvas(canvas.createNewLayer());
 		
 		return this;
+	}
+	
+	public void removeComponent(PainterComponent pc) {
+		this.canvas.removeLayer(pc.getCanvas());
+		list.remove(pc);
+	}
+	
+	public synchronized PainterComponent getComponentByName(String name) {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getName() == name) {
+				return list.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public synchronized void removeComponentByName(String name) {
+		
+		PainterComponent pc = this.getComponentByName(name);
+		if (pc != null) {this.removeComponent(pc); }
+		else { LDDebug.print("the component for name " + name + " does not exist."); }
 	}
 	
 	@Override

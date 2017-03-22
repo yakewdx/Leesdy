@@ -52,6 +52,11 @@ public class LDMultiLayerCanvas {
 		return canvas;
 	}
 	
+	public void removeLayer(LDCanvas canvas) {
+		if (pane != null) pane.getChildren().remove(canvas);
+		this.layers.remove(canvas);
+	}
+	
 	public ArrayList<LDCanvas> getLayers() {
 		return layers;
 	}

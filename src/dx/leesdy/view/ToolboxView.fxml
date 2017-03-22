@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import dx.leesdy.model.layout.LDButton?>
+<?import dx.leesdy.model.layout.LDToggleButton?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -37,7 +38,7 @@
                   </ImageView>
                </graphic>
             </LDButton>
-            <LDButton fx:id="addInfoButton" info="Add info" mnemonicParsing="false" onAction="#handleAdd">
+            <LDToggleButton fx:id="addInfoButton" info="Add info" mnemonicParsing="false">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -45,7 +46,7 @@
                      </image>
                   </ImageView>
                </graphic>
-            </LDButton>
+            </LDToggleButton>
          </items>
       </ToolBar>
    </children>

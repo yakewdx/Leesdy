@@ -71,18 +71,25 @@ public class LDWavPlayer {
 	
 	public void addPainterComponents() {
 		if (painter != null) {
-			if (this.statusCenter.getReader() != null) {
-				painter.addComponent(new PDrawDiarizationResult(4, this.statusCenter));
-			} else {
+			if (this.statusCenter.getReader() == null) {
 				LDDiarizationResultReader reader = new LDDiarizationResultReader(DiarizationOutput);
 				this.statusCenter.setReader(reader);
-				painter.addComponent(new PDrawDiarizationResult(4, this.statusCenter));
-				System.out.println("Reader is NULL.");
+				LDDebug.print("Reader is NULL.");
 			}
-			PDrawVerticalLine pc = (PDrawVerticalLine) painter.getComponentById(0);
+			painter.addComponent(new PDrawDiarizationResult(4, this.statusCenter));
+			
+			PDrawVerticalLine pc = (PDrawVerticalLine) painter.getComponentByName("PDrawVerticalLine");
 			pc.setShowDiarizationResult(true);
 		} else {
 			System.out.println("Painter is null.");
+		}
+	}
+	
+	public void removePainterComponent(String componentName) {
+		this.painter.removeComponentByName(componentName);
+		if (componentName == "PDrawDiarizationResult") {
+			PDrawVerticalLine pc = (PDrawVerticalLine) painter.getComponentByName("PDrawVerticalLine");
+			pc.setShowDiarizationResult(false);
 		}
 	}
 	

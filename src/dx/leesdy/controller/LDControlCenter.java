@@ -4,6 +4,7 @@ import dx.leesdy.model.LDMultiLayerCanvas;
 import dx.leesdy.model.Painter;
 import dx.leesdy.player.LDWavPlayer;
 import dx.leesdy.utils.LDConfigurationLoader;
+import dx.leesdy.utils.LDDebug;
 
 public class LDControlCenter {
 	
@@ -50,7 +51,43 @@ public class LDControlCenter {
 		}
 	}
 
+	/**
+	 * Event Handler: Play
+	 */
+	public void handlePlay() {
+		this.player.play();
+		LDDebug.print("Control center: play");
+	}
 	
+	/**
+	 * Event Handler: Pause
+	 */
+	public void handlePause() {
+		this.player.pause();
+		LDDebug.print("Control center: pause");
+	}
+	
+	/**
+	 * Event Handler: Stop
+	 */
+	public void handleStop() {
+		this.player.stop();
+		LDDebug.print("Control center: stop");
+	}
+	
+	
+	
+	/**
+	 * Event Handler: add component
+	 */
+	public void handleAddComponent() {
+		this.player.addPainterComponents();
+		LDDebug.print("Control center: add Component");
+	}
+	
+	public void handleRemoveComponent(String name) {
+		this.player.removePainterComponent(name);
+	}
 	
 	public LDWavPlayer getPlayer() {
 		return player;

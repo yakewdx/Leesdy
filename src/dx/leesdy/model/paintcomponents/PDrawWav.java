@@ -24,6 +24,7 @@ public class PDrawWav extends PainterComponent {
 	
 	private void init() {
 		data = wav.getData();
+		this.name = "PDrawWav";
 	}
 	
 	@Override

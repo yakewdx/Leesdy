@@ -8,8 +8,12 @@ package dx.leesdy.view;
 
 import dx.leesdy.controller.LDControlCenter;
 import dx.leesdy.model.layout.LDButton;
+import dx.leesdy.model.layout.LDToggleButton;
 import dx.leesdy.player.LDWavPlayer;
+import dx.leesdy.utils.LDDebug;
 import dx.leesdy.utils.LDInitilizableComponent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 
 
@@ -29,20 +33,36 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	private LDButton stopButton;
 	
 	@FXML
-	private LDButton addInfoButton;
+	private LDToggleButton addInfoButton;
 	
 	
 	@FXML
 	private void initialize() {
 		//player = new LDWavPlayer("resources/output.wav");
+		this.addInfoButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				// TODO Auto-generated method stub
+				if (newValue == true) {
+					LDDebug.print("Selected");
+					controlCenter.handleAddComponent();
+				} else {
+					LDDebug.print("UnSelected");
+					controlCenter.handleRemoveComponent("PDrawDiarizationResult");
+				}
+			}
+			
+		});
 	}
 	
 	
 	
 	@FXML
     private void handlePause() {
-    	System.out.println("Pause clicked");
-    	this.player.pause();
+    	//System.out.println("Pause clicked");
+    	this.controlCenter.handlePause();
+    	
     	//this.playButton.setText("Play");
     	setPlayButtonState(true);
 
@@ -51,8 +71,8 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	@FXML
     private void handlePlay() {
     	// todo: Play wav
-    	System.out.println("Play clicked.");
-    	player.play();
+    	// System.out.println("Play clicked.");
+    	this.controlCenter.handlePlay();
     	setPlayButtonState(false);
 
     }
@@ -60,14 +80,14 @@ public class ToolboxViewController implements LDInitilizableComponent{
     // Only for test
     @FXML
     private void handleAdd() {
-    	this.player.addPainterComponents();
+    	this.controlCenter.handleAddComponent();
     }
     
     @FXML
     private void handleStop() {
     	// todo: Stop music
-    	System.out.println("Stop clicked.");
-    	this.player.stop();
+    	// System.out.println("Stop clicked.");
+    	this.controlCenter.handleStop();
     	setPlayButtonState(true);
     }
     

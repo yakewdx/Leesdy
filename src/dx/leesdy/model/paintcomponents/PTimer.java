@@ -14,6 +14,7 @@ public class PTimer extends PainterComponent {
 	public PTimer(int priority, LDStatusCenter statusCenter) {
 		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
+		this.name = "PTimer";
 	}
 	
 	
