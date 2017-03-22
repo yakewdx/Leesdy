@@ -62,6 +62,7 @@ public class PDrawVerticalLine extends PDrawPlaybackState {
 				// get Label from the list
 				
 				LDSegment target = this.statusCenter.getReader().searchIntervalByTime(mouseTime);
+				if (target.contains(mouseTime))
 				gc.fillText(target.getSpeaker(), ms.getX() + 1.5, 29);
 			}
 		}

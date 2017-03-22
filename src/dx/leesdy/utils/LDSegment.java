@@ -20,6 +20,13 @@ public class LDSegment extends LDInterval<Double> {
 		super(start, end);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public boolean contains(Double time) {
+		if (this.startPos < time && this.endPos > time) {
+			return true;
+		}
+		return false;
+	}
 
 	public LDSegment(String showName,
 					 int channelNumber, 

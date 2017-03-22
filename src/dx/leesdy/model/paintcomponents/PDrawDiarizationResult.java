@@ -86,10 +86,10 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 			gc.setStroke(colors.get(speakerLabel));
 			gc.setFill(colors.get(speakerLabel));
 			gc.setLineWidth(1.0);
-			gc.strokeLine(startpos, 40, startpos, canvasHeight - 40);
-			gc.strokeLine(endpos, 40, endpos, canvasHeight - 40);
+			gc.strokeLine(startpos, canvasHeight - 60, startpos, canvasHeight - 40);
+			gc.strokeLine(endpos, canvasHeight - 60, endpos, canvasHeight - 40);
 			gc.setGlobalAlpha(0.5);
-			gc.fillRect(startpos, 40, (endpos - startpos), canvasHeight - 80);
+			gc.fillRect(startpos, canvasHeight - 60, (endpos - startpos), 20);
 			gc.setGlobalAlpha(1.0);
 			
 			//gc.setFill(Color.WHITE);
