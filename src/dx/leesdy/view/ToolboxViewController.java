@@ -15,6 +15,7 @@ import dx.leesdy.utils.LDInitilizableComponent;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.media.MediaPlayer.Status;
 
 
 public class ToolboxViewController implements LDInitilizableComponent{
@@ -24,10 +25,7 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	private LDWavPlayer player;
 	
 	@FXML
-	private LDButton playButton;
-	
-	@FXML
-	private LDButton pauseButton;
+	private LDToggleButton playButton;
 	
 	@FXML
 	private LDButton stopButton;
@@ -45,11 +43,29 @@ public class ToolboxViewController implements LDInitilizableComponent{
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				// TODO Auto-generated method stub
 				if (newValue == true) {
-					LDDebug.print("Selected");
+					LDDebug.print("Add component button : selected");
 					controlCenter.handleAddComponent();
 				} else {
-					LDDebug.print("UnSelected");
+					LDDebug.print("Add component button : unselected");
 					controlCenter.handleRemoveComponent("PDrawDiarizationResult");
+				}
+			}
+			
+		});
+		
+		this.playButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				// TODO Auto-generated method stub
+				if (newValue == true) {
+					LDDebug.print("Play button : selected");
+					controlCenter.handlePlay();
+				} else {
+					LDDebug.print("Play button : unselected");
+//					Status status = player.getStatusCenter().getMediaPlayer().getStatus();
+//					LDDebug.print(status.name());
+					controlCenter.handlePause();
 				}
 			}
 			
@@ -64,7 +80,7 @@ public class ToolboxViewController implements LDInitilizableComponent{
     	this.controlCenter.handlePause();
     	
     	//this.playButton.setText("Play");
-    	setPlayButtonState(true);
+    	//setPlayButtonState(true);
 
     }
     
@@ -73,7 +89,7 @@ public class ToolboxViewController implements LDInitilizableComponent{
     	// todo: Play wav
     	// System.out.println("Play clicked.");
     	this.controlCenter.handlePlay();
-    	setPlayButtonState(false);
+    	//setPlayButtonState(false);
 
     }
 	
@@ -88,7 +104,8 @@ public class ToolboxViewController implements LDInitilizableComponent{
     	// todo: Stop music
     	// System.out.println("Stop clicked.");
     	this.controlCenter.handleStop();
-    	setPlayButtonState(true);
+    	this.playButton.setSelected(false);
+    	//setPlayButtonState(true);
     }
     
     @FXML
@@ -98,10 +115,10 @@ public class ToolboxViewController implements LDInitilizableComponent{
     	this.player.diarization();
     }
     
-    public void setPlayButtonState(boolean toShowPlay) {
-    	playButton.setVisible(toShowPlay);
-    	pauseButton.setVisible(!toShowPlay);
-    }
+//    public void setPlayButtonState(boolean toShowPlay) {
+//    	playButton.setVisible(toShowPlay);
+//    	pauseButton.setVisible(!toShowPlay);
+//    }
     
     public LDWavPlayer getPlayer() {
     	return player;

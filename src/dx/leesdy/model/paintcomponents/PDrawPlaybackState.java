@@ -27,7 +27,10 @@ public class PDrawPlaybackState extends PDrawWav {
 		// TODO Auto-generated method stub
 		if (this.wav != null && this.player != null) {
 			Status status = this.player.getStatus();
-			if (status == Status.PLAYING || status == Status.PAUSED) {
+			if (status == Status.PLAYING || 
+					status == Status.PAUSED || 
+					status == Status.STOPPED ||
+					status == Status.READY) {
 				MediaPlayer pl = player;
 				Duration curTime = pl.getCurrentTime();
 				Duration mediaLength = pl.getTotalDuration();
@@ -55,7 +58,10 @@ public class PDrawPlaybackState extends PDrawWav {
 	public void updateState() {
 		if (this.wav != null && this.player != null) {
 			Status status = this.player.getStatus();
-			if (status == Status.PLAYING) {
+			if (status == Status.PLAYING || 
+					status == Status.PAUSED || 
+					status == Status.STOPPED ||
+					status == Status.READY) {
 				this.setNeedToUpdate(true);
 			}
 		}

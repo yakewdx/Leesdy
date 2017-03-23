@@ -75,6 +75,19 @@ public class LDControlCenter {
 		LDDebug.print("Control center: stop");
 	}
 	
+	/**
+	 * Event Handler: Unused
+	 */
+	public void handleUndefinedBehavior () {
+		LDDebug.print("Control center: undefined behavior");
+	}
+	
+	/**
+	 * Event Handler: Mute
+	 */
+	public void handleMute(boolean state) {
+		this.player.getPlayer().setMute(state);
+	}
 	
 	
 	/**

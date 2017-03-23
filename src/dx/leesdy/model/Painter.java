@@ -2,9 +2,11 @@ package dx.leesdy.model;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
 
 import dx.leesdy.model.paintcomponents.PainterComponent;
 import dx.leesdy.utils.LDDebug;
+import dx.leesdy.utils.LDExecutor;
 import javafx.scene.canvas.Canvas;
 
 public class Painter implements Runnable {
@@ -54,6 +56,13 @@ public class Painter implements Runnable {
 		PainterComponent pc = this.getComponentByName(name);
 		if (pc != null) {this.removeComponent(pc); }
 		else { LDDebug.print("the component for name " + name + " does not exist."); }
+	}
+	
+	
+	public void start() {
+		
+		LDExecutor.getExecutor().scheduleWithFixedDelay(this,10,100,TimeUnit.MILLISECONDS);
+
 	}
 	
 	@Override

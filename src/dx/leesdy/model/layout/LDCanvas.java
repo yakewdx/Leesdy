@@ -19,27 +19,28 @@ public class LDCanvas extends Canvas {
 
 	private String description;
 	
+	private MouseState mouseState;
+	
 	public LDCanvas(String _description) {
 		super();
 		this.description = _description;
-		init();
 	}
 	
 	public LDCanvas() {
 		super();
 		this.description = "";
-		init();
 	}
 	
-	public LDCanvas(int width, int height) {
+	public LDCanvas(double width, double height) {
 		super(width,height);
 		this.description = "";
-		init();
 	}
 	
 	
-	private void init() {
-		MouseState ms = DeviceState.getInstance().getMouseState();
+	public void init(MouseState ms) {
+		
+		this.setMouseState(ms);
+		
 		this.setOnMouseMoved(new EventHandler<MouseEvent> () {
 
 			@Override
@@ -71,6 +72,14 @@ public class LDCanvas extends Canvas {
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public MouseState getMouseState() {
+		return mouseState;
+	}
+
+	public void setMouseState(MouseState mouseState) {
+		this.mouseState = mouseState;
 	}
 	
 }

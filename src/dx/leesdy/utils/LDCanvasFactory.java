@@ -28,7 +28,7 @@ public class LDCanvasFactory {
 		 
 	}
 	
-	public LDCanvas createCanvasWithSize(int width, int height) {
+	public LDCanvas createCanvasWithSize(double width, double height) {
 		return new LDCanvas(width,height);
 	}
 	

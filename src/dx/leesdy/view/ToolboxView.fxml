@@ -11,7 +11,7 @@
    <children>
       <ToolBar style="-fx-background-color: #7f7f7f;" stylesheets="@../controller/application.css">
          <items>
-            <LDButton fx:id="playButton" info="Play" mnemonicParsing="false" onAction="#handlePlay" styleClass="toolbox_button">
+            <LDToggleButton fx:id="playButton" info="Play" mnemonicParsing="false" styleClass="toolbox_button">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -19,16 +19,7 @@
                      </image>
                   </ImageView>
                </graphic>
-            </LDButton>
-            <LDButton fx:id="pauseButton" info="Pause" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handlePause" styleClass="toolbox_button">
-               <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../resources/icons/4.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </LDButton>
+            </LDToggleButton>
             <LDButton fx:id="stopButton" info="Stop" mnemonicParsing="false" onAction="#handleStop">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">

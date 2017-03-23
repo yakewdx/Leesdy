@@ -6,10 +6,14 @@
  */
 package dx.leesdy.view;
 
+import java.io.IOException;
+
 import dx.leesdy.controller.LDControlCenter;
+import dx.leesdy.controller.Main;
 import dx.leesdy.model.LDMultiLayerCanvas;
 import dx.leesdy.utils.LDInitilizableComponent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListView;
@@ -69,6 +73,27 @@ public class CanvasViewController implements LDInitilizableComponent{
 	public void init() {
 		// TODO Auto-generated method stub
 		this.controlCenter.getCanvas().setPane(pane);
+		
+		// load media view from fxml
+		try {
+			
+			FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(Main.class.getResource("../view/MediaView.fxml"));
+	        AnchorPane mediaView;
+			mediaView = (AnchorPane) loader.load();
+			this.listView.getItems().add(mediaView);
+	        //mainPane.setCenter(canvasView);
+	        MediaViewController mediaViewController = loader.getController();
+	        mediaViewController.setControlCenter(controlCenter);
+	        mediaViewController.setStatusCenter(this.controlCenter.getPlayer().getStatusCenter());
+	        mediaViewController.init();
+	        
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+
 	}
 	
 }

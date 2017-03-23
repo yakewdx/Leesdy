@@ -37,7 +37,7 @@ public class PDrawVerticalLine extends PDrawPlaybackState {
 	public void paint(Canvas canvas) {
 		// TODO Auto-generated method stub
 		
-		MouseState ms = statusCenter.getDeviceState().getMouseState();
+		MouseState ms = this.getCanvas().getMouseState();
 		
 		if (ms.isMouseInCanvas()) {
 			MediaPlayer pl = player;

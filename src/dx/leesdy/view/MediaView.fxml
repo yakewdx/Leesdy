@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import dx.leesdy.model.layout.*?>
+
+<AnchorPane maxWidth="200.0" minWidth="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dx.leesdy.view.MediaViewController" >
+   <children>
+      <Pane maxHeight="200.0" maxWidth="200.0" minHeight="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #333;">
+         <children>
+            <Pane layoutY="20.0" prefHeight="160.0" prefWidth="200.0" styleClass="canvas_media_pane" stylesheets="@../controller/application.css">
+               <padding>
+                  <Insets bottom="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <ToolBar layoutX="115.0" layoutY="119.0" prefHeight="37.0" prefWidth="66.0" styleClass="canvas_media_pane_toolbar" stylesheets="@../controller/application.css">
+                    <items>
+                      <LDButton fx:id="unusedButton" mnemonicParsing="false" styleClass="canvas_media_pane_button" stylesheets="@../controller/application.css" text="b" />
+                        <LDToggleButton fx:id="muteButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="0.0" styleClass="canvas_media_pane_button" text="M" />
+                    </items>
+                  </ToolBar>
+                  <LDProgressBar fx:id="progressBar" layoutX="122.5" layoutY="64.0" prefHeight="2.0" prefWidth="103.0" progress="0.8" rotate="-90.0" styleClass="canvas_progressbar" stylesheets="@../controller/application.css" />
+                  <LDSlider fx:id="slider" layoutX="172.0" layoutY="13.0" orientation="VERTICAL" prefHeight="105.0" prefWidth="6.0" styleClass="canvas_slider" stylesheets="@../controller/application.css" value="80.0" />
+                  <Pane fx:id="canvasPane" layoutX="20.0" layoutY="12.0" prefHeight="105.0" prefWidth="138.0" style="-fx-background-color: #031326;" styleClass="canvas_media_pane_pane" stylesheets="@../controller/application.css" />
+                  
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -65,7 +65,7 @@ public class LDWavPlayer {
 		
 		painter.addComponent(new PDrawPlaybackState(5, this.statusCenter));
 		
-		LDExecutor.getExecutor().scheduleWithFixedDelay(painter,10,100,TimeUnit.MILLISECONDS);
+		painter.start();
 		//painter.run();
 	}
 	
@@ -178,6 +178,14 @@ public class LDWavPlayer {
 		
 	}
 	
+	public LDStatusCenter getStatusCenter() {
+		return statusCenter;
+	}
+
+	public void setStatusCenter(LDStatusCenter statusCenter) {
+		this.statusCenter = statusCenter;
+	}
+
 	public void play() {
 		mediaPlayer.play();
 	}
