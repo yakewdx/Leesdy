@@ -1,10 +1,14 @@
 package dx.leesdy.controller;
 
 import dx.leesdy.model.LDMultiLayerCanvas;
+import dx.leesdy.model.MouseState;
 import dx.leesdy.model.Painter;
 import dx.leesdy.player.LDWavPlayer;
 import dx.leesdy.utils.LDConfigurationLoader;
 import dx.leesdy.utils.LDDebug;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 public class LDControlCenter {
 	
@@ -42,6 +46,16 @@ public class LDControlCenter {
 			this.player = new LDWavPlayer(this.configurationLoader.getAudioFileName());
 			this.canvas = new LDMultiLayerCanvas(this.configurationLoader.getDefaultCanvasWidth(),
 												 this.configurationLoader.getDefaultCanvasHeight());
+			
+			this.canvas.setOnMouseClicked(new EventHandler<MouseEvent> () {
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				handleSeek();
+			}
+			
+		});
 			this.painter = new Painter(canvas);
 			this.player.setPainter(painter);
 			
@@ -87,6 +101,16 @@ public class LDControlCenter {
 	 */
 	public void handleMute(boolean state) {
 		this.player.getPlayer().setMute(state);
+	}
+	
+	/**
+	 * EventHandler: Seek
+	 */
+	public void handleSeek() {
+		MouseState ms = this.canvas.getMouseState();
+		double x = ms.getX();
+		Duration seekTime = this.player.getPlayer().getTotalDuration().multiply(x / this.canvas.getContainer().getWidth());
+		this.player.getPlayer().seek(seekTime);
 	}
 	
 	
