@@ -138,6 +138,15 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 		LDDebug.print("Control center: add Component");
 	}
 	
+	
+	/**
+	 * 
+	 * @param name
+	 */
+	public void handleVolumeChange(double volume) {
+		
+	}
+	
 	public void handleRemoveComponent(String name) {
 		this.player.removePainterComponent(name);
 	}

@@ -61,7 +61,7 @@ public class Painter implements Runnable {
 	
 	public void start() {
 		
-		LDExecutor.getExecutor().scheduleWithFixedDelay(this,10,100,TimeUnit.MILLISECONDS);
+		LDExecutor.getExecutor().scheduleWithFixedDelay(this,10,200,TimeUnit.MILLISECONDS);
 
 	}
 	
@@ -88,11 +88,9 @@ public class Painter implements Runnable {
 			}
 			
 		});
-		
-		
-		
+			
 		for (int i = 0; i < list.size(); i++) {
-			PainterComponent pc =  list.get(i);
+			PainterComponent pc = list.get(i);
 			pc.updateState();
 			if (pc.getCanvas() != canvas.getLayerAtIndex(i)) {
 				pc.setCanvas(canvas.getLayerAtIndex(i));

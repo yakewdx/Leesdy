@@ -4,6 +4,7 @@ package dx.leesdy.model.paintcomponents;
 import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.model.WavWrapper;
 import dx.leesdy.player.LDWavPlayer;
+import dx.leesdy.utils.LDDebug;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.MediaPlayer;
@@ -41,7 +42,7 @@ public class PDrawPlaybackState extends PDrawWav {
 				GraphicsContext gc = canvas.getGraphicsContext2D();
 				
 				// String playbackStatus = String.format("%.2f / %.2f", time, totalTime);
-				
+				LDDebug.print(curTime.toString());
 				gc.setStroke(Color.WHITE);
 				gc.setFill(Color.WHITE);
 				// gc.fillText(playbackStatus, 3, 10);
