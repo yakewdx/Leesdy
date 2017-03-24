@@ -14,6 +14,7 @@ import dx.leesdy.utils.LDCanvasFactory;
 import dx.leesdy.utils.LDDebug;
 import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -81,6 +82,16 @@ public class LDMultiLayerCanvas {
 				mouseState.setY(event.getY());
 			}
 
+		});
+		
+		container.setOnKeyReleased(new EventHandler<KeyEvent> () {
+
+			@Override
+			public void handle(KeyEvent event) {
+				// TODO Auto-generated method stub
+				LDDebug.print("LDMultiLayerCanvas : Key pressed.");
+			}
+			
 		});
 	}
 	public LDMultiLayerCanvas() {
