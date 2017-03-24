@@ -20,7 +20,7 @@ public class Main extends Application {
 	
 	private AnchorPane root;
 	private LDScene scene;
-	
+	private LDControlCenter controlCenter;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -29,6 +29,8 @@ public class Main extends Application {
 			primaryStage.setTitle("Leesdy");
 			primaryStage.getIcons().add(new Image("file:resources/icons/Icon2.png"));
 			setInitScene(primaryStage);
+			//scene.setOnKeyPressed(controlCenter);
+			scene.setOnKeyReleased(controlCenter);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -45,7 +47,7 @@ public class Main extends Application {
 			root = BasicView;
 			
 			// init control center
-			LDControlCenter controlCenter = new LDControlCenter();
+			controlCenter = new LDControlCenter();
 			controlCenter.init();
 			
 			BasicViewController controller = (BasicViewController)loader.getController();

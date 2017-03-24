@@ -15,7 +15,8 @@ public class PTestDrawWhiteBackground extends PainterComponent {
 	@Override
 	public void updateState() {
 		// TODO Auto-generated method stub
-		this.setNeedToUpdate();
+		if (this.getDrawingCount() == 0) this.setNeedToUpdate();
+		else this.setNeedToUpdate(false);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import dx.leesdy.model.LDStatusCenter;
 import java.text.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class PTimer extends PainterComponent {
 
@@ -25,6 +26,7 @@ public class PTimer extends PainterComponent {
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss"); 
 		String s = df.format(new Date());
 		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.setFill(Color.BLUE);
 		gc.fillText(s, 10, 10);                    
 	}
 	

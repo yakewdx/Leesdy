@@ -40,11 +40,11 @@ public class PDrawPlaybackState extends PDrawWav {
 				int pos = (int)(time / totalTime * canvasWidth);
 				GraphicsContext gc = canvas.getGraphicsContext2D();
 				
-				String playbackStatus = String.format("%.2f / %.2f", time, totalTime);
+				// String playbackStatus = String.format("%.2f / %.2f", time, totalTime);
 				
 				gc.setStroke(Color.WHITE);
 				gc.setFill(Color.WHITE);
-				gc.fillText(playbackStatus, 3, 10);
+				// gc.fillText(playbackStatus, 3, 10);
 				gc.setLineWidth(0.5);
 				gc.strokeLine(pos, 0, pos, canvas.getHeight());
 				

@@ -6,6 +6,7 @@ import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.model.Painter;
 import dx.leesdy.model.layout.*;
 import dx.leesdy.model.paintcomponents.PDrawWav;
+import dx.leesdy.model.paintcomponents.PMDrawMediaInfo;
 import dx.leesdy.model.paintcomponents.PTestDrawWhiteBackground;
 import dx.leesdy.model.paintcomponents.PTimer;
 import dx.leesdy.utils.LDInitilizableComponent;
@@ -98,8 +99,9 @@ public class MediaViewController implements LDInitilizableComponent{
 		canvas.setLayoutY(3);
 		canvas.setLayoutX(3);
 		
-		painter.addComponent(new PTimer(4, this.statusCenter));
-		painter.addComponent(new PTestDrawWhiteBackground(2, this.statusCenter));
+		//painter.addComponent(new PTimer(6, this.statusCenter));
+		painter.addComponent(new PTestDrawWhiteBackground(1, this.statusCenter));
+		painter.addComponent(new PMDrawMediaInfo(4, this.statusCenter));
 		
 		// run the painter.
 		painter.start();

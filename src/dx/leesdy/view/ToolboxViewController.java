@@ -36,6 +36,7 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	
 	@FXML
 	private void initialize() {
+		
 		//player = new LDWavPlayer("resources/output.wav");
 		this.addInfoButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
 
@@ -60,12 +61,12 @@ public class ToolboxViewController implements LDInitilizableComponent{
 				// TODO Auto-generated method stub
 				if (newValue == true) {
 					LDDebug.print("Play button : selected");
-					controlCenter.handlePlay();
+					//controlCenter.handlePlay();
 				} else {
 					LDDebug.print("Play button : unselected");
 //					Status status = player.getStatusCenter().getMediaPlayer().getStatus();
 //					LDDebug.print(status.name());
-					controlCenter.handlePause();
+					//controlCenter.handlePause();
 				}
 			}
 			
@@ -142,6 +143,7 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	public void init() {
 		// TODO Auto-generated method stub
 		this.player = this.controlCenter.getPlayer();
+		this.playButton.selectedProperty().bindBidirectional(controlCenter.getPlayButtonSelectedProperty());
 	}
     
 }

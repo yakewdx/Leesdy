@@ -84,15 +84,6 @@ public class LDMultiLayerCanvas {
 
 		});
 		
-		container.setOnKeyReleased(new EventHandler<KeyEvent> () {
-
-			@Override
-			public void handle(KeyEvent event) {
-				// TODO Auto-generated method stub
-				LDDebug.print("LDMultiLayerCanvas : Key pressed.");
-			}
-			
-		});
 	}
 	public LDMultiLayerCanvas() {
 

@@ -6,11 +6,15 @@ import dx.leesdy.model.Painter;
 import dx.leesdy.player.LDWavPlayer;
 import dx.leesdy.utils.LDConfigurationLoader;
 import dx.leesdy.utils.LDDebug;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
-public class LDControlCenter {
+public class LDControlCenter implements EventHandler<KeyEvent>{
 	
 	/**
 	 *  Main media player
@@ -28,6 +32,7 @@ public class LDControlCenter {
 	private Painter painter;
 
 	
+	private BooleanProperty playButtonSelectedProperty;
 	/**
 	 *  Configuration loader
 	 *  If set, it will load configs from the config file
@@ -41,14 +46,15 @@ public class LDControlCenter {
 	}
 
 	public void init() {
+		
 		this.configurationLoader.loadConfig();
 		if (this.configurationLoader.isLoaded()) {
 			this.player = new LDWavPlayer(this.configurationLoader.getAudioFileName());
 			this.canvas = new LDMultiLayerCanvas(this.configurationLoader.getDefaultCanvasWidth(),
 												 this.configurationLoader.getDefaultCanvasHeight());
 			
+			playButtonSelectedProperty = new SimpleBooleanProperty();
 			this.canvas.setOnMouseClicked(new EventHandler<MouseEvent> () {
-
 			@Override
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
@@ -63,6 +69,16 @@ public class LDControlCenter {
 				this.player.initGraphics(canvas);
 			}
 		}
+		
+		this.playButtonSelectedProperty.addListener((changeEvent, oldValue, newValue) -> {
+			if (newValue.booleanValue() == true) {
+				LDDebug.print("ControlCenter : Play button selected.");
+				this.handlePlay();
+			} else {
+				LDDebug.print("ControlCenter : Play button unselected.");
+				this.handlePause();
+			}
+		});
 	}
 
 	/**
@@ -161,6 +177,36 @@ public class LDControlCenter {
 
 	public void setConfigurationLoader(LDConfigurationLoader configurationLoader) {
 		this.configurationLoader = configurationLoader;
+	}
+
+	@Override
+	public void handle(KeyEvent event) {
+		// TODO Auto-generated method stub
+		LDDebug.print("LDMultiLayerCanvas : Key pressed.");
+		switch (event.getCode()) {
+		case SPACE:
+			if (this.player.getPlayer().getStatus() == Status.STOPPED ||
+					this.player.getPlayer().getStatus() == Status.READY || 
+					this.player.getPlayer().getStatus() == Status.PAUSED) {
+				this.handlePlay();
+				this.playButtonSelectedProperty.set(true);
+			} else if (this.player.getPlayer().getStatus() == Status.PLAYING) {
+				this.playButtonSelectedProperty.set(false);
+			}
+			break;
+		default:
+			LDDebug.print("LDControlCenter : default keypress.");
+			break;
+		
+		}
+	}
+
+	public BooleanProperty getPlayButtonSelectedProperty() {
+		return playButtonSelectedProperty;
+	}
+
+	public void setPlayButtonSelectedProperty(BooleanProperty playButtonSelectedProperty) {
+		this.playButtonSelectedProperty = playButtonSelectedProperty;
 	}
 	
 	
