@@ -2,6 +2,8 @@ package dx.leesdy.player;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
+
+import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 import javafx.scene.input.MouseEvent;
@@ -13,6 +15,8 @@ import dx.leesdy.model.*;
 import dx.leesdy.model.layout.LDCanvas;
 import dx.leesdy.model.paintcomponents.PDrawDiarizationResult;
 import dx.leesdy.model.paintcomponents.PDrawPlaybackState;
+import dx.leesdy.model.paintcomponents.PDrawReferencePlane;
+import dx.leesdy.model.paintcomponents.PDrawTimeAxis;
 import dx.leesdy.model.paintcomponents.PDrawVerticalLine;
 import dx.leesdy.model.paintcomponents.PDrawWav;
 
@@ -62,11 +66,24 @@ public class LDWavPlayer {
 		// 
 		painter.addComponent(new PDrawVerticalLine(6, this.statusCenter));
 		painter.addComponent(new PDrawWav(3, this.statusCenter));
-		
+		painter.addComponent(new PDrawTimeAxis(8,this.statusCenter));
 		painter.addComponent(new PDrawPlaybackState(5, this.statusCenter));
+		painter.addComponent(new PDrawReferencePlane(10, this.statusCenter));
 		
-		painter.start();
+		//new Thread(painter).start();
+		//painter.start();
 		//painter.run();
+		
+		new AnimationTimer() {
+
+			@Override
+			public void handle(long now) {
+				// TODO Auto-generated method stub
+				painter.paint();
+			}
+			
+		}.start();
+		
 	}
 	
 	public void addPainterComponents() {

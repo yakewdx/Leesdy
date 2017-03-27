@@ -32,6 +32,7 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 	
 	ArrayList<LDSegment> list;
 	Map<String, Color> colors;
+	Map<String, Double> positions;
 	
 	Consumer<LDSegment> paintResult;
 	/**
@@ -48,6 +49,7 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 	
 	private void init() {
 		colors = new HashMap<String, Color>();
+		positions = new HashMap<String, Double>();
 		this.name = "PDrawDiarizationResult";
 	}
 
@@ -79,6 +81,9 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 				int green = rand.nextInt(127) + 128;
 				int blue = rand.nextInt(127) + 128;
 				
+				Double pos = (double) (positions.size() * 3);
+				positions.put(speakerLabel, pos);
+				
 				Color color = Color.rgb(red, green, blue);
 				colors.put(speakerLabel, color);
 			}
@@ -86,10 +91,10 @@ public class PDrawDiarizationResult extends PDrawPlaybackState {
 			gc.setStroke(colors.get(speakerLabel));
 			gc.setFill(colors.get(speakerLabel));
 			gc.setLineWidth(1.0);
-			gc.strokeLine(startpos, canvasHeight - 60, startpos, canvasHeight - 40);
-			gc.strokeLine(endpos, canvasHeight - 60, endpos, canvasHeight - 40);
+			gc.strokeLine(startpos, canvasHeight - 60 + positions.get(speakerLabel), startpos, canvasHeight - 40 + positions.get(speakerLabel));
+			gc.strokeLine(endpos, canvasHeight - 60 + positions.get(speakerLabel), endpos, canvasHeight - 40 + positions.get(speakerLabel));
 			gc.setGlobalAlpha(0.5);
-			gc.fillRect(startpos, canvasHeight - 60, (endpos - startpos), 20);
+			gc.fillRect(startpos, canvasHeight - 60 + positions.get(speakerLabel), (endpos - startpos), 20);
 			gc.setGlobalAlpha(1.0);
 			
 			//gc.setFill(Color.WHITE);

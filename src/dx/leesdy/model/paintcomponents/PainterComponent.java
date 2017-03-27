@@ -18,6 +18,8 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 	
 	private boolean needToUpdate;
 	
+	private boolean needToPrintDebugMsg;
+	
 	protected LDStatusCenter statusCenter;
 	
 	protected String name;
@@ -37,6 +39,7 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 		this.id = idCount++;
 		this.setDrawingCount(0);
 		this.name = "";
+		this.needToPrintDebugMsg = true;
 	}
 	
 	@Override
@@ -113,5 +116,13 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 
 	public void setDrawingCount(long drawingCount) {
 		this.drawingCount = drawingCount;
+	}
+
+	public boolean isNeedToPrintDebugMsg() {
+		return needToPrintDebugMsg;
+	}
+
+	public void setNeedToPrintDebugMsg(boolean needToPrintDebugMsg) {
+		this.needToPrintDebugMsg = needToPrintDebugMsg;
 	}
 }

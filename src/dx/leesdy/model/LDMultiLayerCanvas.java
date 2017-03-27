@@ -28,6 +28,7 @@ public class LDMultiLayerCanvas {
 
 	private MouseState mouseState;
 
+	private String info;
 
 	public MouseState getMouseState() {
 		return mouseState;
@@ -185,6 +186,12 @@ public class LDMultiLayerCanvas {
 	}
 	public void setContainer(Pane container) {
 		this.container = container;
+	}
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
 	}
 
 }

@@ -61,21 +61,21 @@ public class Painter implements Runnable {
 	
 	public void start() {
 		
-		LDExecutor.getExecutor().scheduleWithFixedDelay(this,10,200,TimeUnit.MILLISECONDS);
+		//LDExecutor.getExecutor().scheduleWithFixedDelay(this,10,200,TimeUnit.MILLISECONDS);
 
 	}
 	
 	@Override
 	public void run() {
-		//while (!Thread.currentThread().isInterrupted()) {
+		while (!Thread.currentThread().isInterrupted()) {
 			paint();
-//			try {
-//				Thread.sleep(100);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-		//}
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				//  e.printStackTrace();
+			}
+		}
 	}
 	
 	public void paint() {

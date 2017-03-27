@@ -10,6 +10,7 @@ import dx.leesdy.model.paintcomponents.PMDrawMediaInfo;
 import dx.leesdy.model.paintcomponents.PTestDrawWhiteBackground;
 import dx.leesdy.model.paintcomponents.PTimer;
 import dx.leesdy.utils.LDInitilizableComponent;
+import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -104,7 +105,18 @@ public class MediaViewController implements LDInitilizableComponent{
 		painter.addComponent(new PMDrawMediaInfo(4, this.statusCenter));
 		
 		// run the painter.
-		painter.start();
+		//painter.start();
+		//new Thread(painter).start();
+		new AnimationTimer() {
+
+			@Override
+			public void handle(long now) {
+				// TODO Auto-generated method stub
+				painter.paint();
+			}
+			
+		}.start();
+		
 		
 		// set the behaviors of slider and progress bar
 		this.slider.valueProperty().addListener(new ChangeListener<Number> () {

@@ -44,6 +44,8 @@ public class PMDrawMediaInfo extends PainterComponent {
 		
 		String playbackTime = String.format("%02d:%02d / %02d:%02d", cur_minutes, cur_seconds, total_minutes, total_seconds);
 		
+		//if(this.isNeedToPrintDebugMsg())LDDebug.print("PMDrawMediaInfo : " + playbackTime);
+		
 		gc.setFill(Color.BLUEVIOLET);
 		
 		//LDDebug.print(playbackTime);
