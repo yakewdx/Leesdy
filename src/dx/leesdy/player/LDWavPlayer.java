@@ -36,6 +36,7 @@ public class LDWavPlayer {
 	private MediaPlayer mediaPlayer;
 	private LDStatusCenter statusCenter;
 	private Painter painter;
+	private AnimationTimer timer;
 	//	private LDDiarizationResultReader reader;
 	
 	public Painter getPainter() {
@@ -50,11 +51,12 @@ public class LDWavPlayer {
 	// For test
 	private String DiarizationOutput = "showName.out.seg";
 	
-	public LDWavPlayer(String filename) {
+	public LDWavPlayer(String filename, LDStatusCenter statusCenter) {
 		this.isInitializationSucceeded = false;
-		this.statusCenter = new LDStatusCenter(filename);
+		this.statusCenter = statusCenter;
+		//this.statusCenter = new LDStatusCenter(filename);
 		//this.statusCenter.getSource(). source = filename;
-		initPlayer();
+		//initPlayer();
 	}
 	
 	public boolean isInitializationSuceeded() {
@@ -74,7 +76,7 @@ public class LDWavPlayer {
 		//painter.start();
 		//painter.run();
 		
-		new AnimationTimer() {
+		this.timer = new AnimationTimer() {
 
 			@Override
 			public void handle(long now) {
@@ -82,7 +84,8 @@ public class LDWavPlayer {
 				painter.paint();
 			}
 			
-		}.start();
+		};
+		timer.start();
 		
 	}
 	
@@ -110,7 +113,7 @@ public class LDWavPlayer {
 		}
 	}
 	
-	private void initPlayer() {
+	public void initPlayer() {
 		try {
 			String source = this.statusCenter.getSouceFile();
 			Media media = new Media(new File(source).toURI().toString());
@@ -241,5 +244,10 @@ public class LDWavPlayer {
 	
 	public MediaPlayer getPlayer() {
 		return this.mediaPlayer;
+	}
+	
+	public void destroy() {
+		this.timer.stop();
+		this.timer = null;
 	}
 }

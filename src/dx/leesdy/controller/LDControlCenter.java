@@ -1,6 +1,7 @@
 package dx.leesdy.controller;
 
 import dx.leesdy.model.LDMultiLayerCanvas;
+import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.model.MouseState;
 import dx.leesdy.model.Painter;
 import dx.leesdy.player.LDWavPlayer;
@@ -24,14 +25,33 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 	/**
 	 *  Main canvas
 	 */
-	private LDMultiLayerCanvas canvas;
+	private LDMultiLayerCanvas mainCanvas;
+	
+	
+	/**
+	 * Media canvas
+	 */
+	private LDMultiLayerCanvas mediaCanvas;
 	
 	/**
 	 *  Main painter
 	 */
 	private Painter painter;
 
+	/**
+	 *  Status center for this part
+	 */
+	private LDStatusCenter statusCenter;
 	
+	
+	public LDStatusCenter getStatusCenter() {
+		return statusCenter;
+	}
+
+	public void setStatusCenter(LDStatusCenter statusCenter) {
+		this.statusCenter = statusCenter;
+	}
+
 	private BooleanProperty playButtonSelectedProperty;
 	/**
 	 *  Configuration loader
@@ -43,18 +63,30 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 	
 	public LDControlCenter() {
 		this.configurationLoader = new LDConfigurationLoader("resources/settings.conf");
+		this.init("");
+	}
+	
+	public LDControlCenter(String filename) {
+		this.configurationLoader = new LDConfigurationLoader("resources/settings.conf");
+		this.init(filename);
 	}
 
-	public void init() {
+	private void init(String name) {
 		
 		this.configurationLoader.loadConfig();
 		if (this.configurationLoader.isLoaded()) {
-			this.player = new LDWavPlayer(this.configurationLoader.getAudioFileName());
-			this.canvas = new LDMultiLayerCanvas(this.configurationLoader.getDefaultCanvasWidth(),
+			String filename = name;
+			if (name == "") {
+				filename = this.configurationLoader.getAudioFileName();
+			}
+			this.statusCenter = new LDStatusCenter(filename);
+			this.player = new LDWavPlayer(filename, statusCenter);
+			this.player.initPlayer();
+			this.mainCanvas = new LDMultiLayerCanvas(this.configurationLoader.getDefaultCanvasWidth(),
 												 this.configurationLoader.getDefaultCanvasHeight());
-			
+			this.mediaCanvas = new LDMultiLayerCanvas(132, 99);
 			playButtonSelectedProperty = new SimpleBooleanProperty();
-			this.canvas.setOnMouseClicked(new EventHandler<MouseEvent> () {
+			this.mainCanvas.setOnMouseClicked(new EventHandler<MouseEvent> () {
 			@Override
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
@@ -62,11 +94,11 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 			}
 			
 		});
-			this.painter = new Painter(canvas);
+			this.painter = new Painter(mainCanvas);
 			this.player.setPainter(painter);
 			
 			if (this.player.isInitializationSuceeded()) {
-				this.player.initGraphics(canvas);
+				this.player.initGraphics(mainCanvas);
 			}
 		}
 		
@@ -123,9 +155,9 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 	 * EventHandler: Seek
 	 */
 	public void handleSeek() {
-		MouseState ms = this.canvas.getMouseState();
+		MouseState ms = this.mainCanvas.getMouseState();
 		double x = ms.getX();
-		Duration seekTime = this.player.getPlayer().getTotalDuration().multiply(x / this.canvas.getContainer().getWidth());
+		Duration seekTime = this.player.getPlayer().getTotalDuration().multiply(x / this.mainCanvas.getContainer().getWidth());
 		this.player.getPlayer().seek(seekTime);
 	}
 	
@@ -158,16 +190,6 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 
 	public void setPlayer(LDWavPlayer player) {
 		this.player = player;
-	}
-
-
-	public LDMultiLayerCanvas getCanvas() {
-		return canvas;
-	}
-
-
-	public void setCanvas(LDMultiLayerCanvas canvas) {
-		this.canvas = canvas;
 	}
 
 
@@ -216,6 +238,22 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 
 	public void setPlayButtonSelectedProperty(BooleanProperty playButtonSelectedProperty) {
 		this.playButtonSelectedProperty = playButtonSelectedProperty;
+	}
+
+	public LDMultiLayerCanvas getMainCanvas() {
+		return mainCanvas;
+	}
+
+	public void setMainCanvas(LDMultiLayerCanvas mainCanvas) {
+		this.mainCanvas = mainCanvas;
+	}
+
+	public LDMultiLayerCanvas getMediaCanvas() {
+		return mediaCanvas;
+	}
+
+	public void setMediaCanvas(LDMultiLayerCanvas mediaCanvas) {
+		this.mediaCanvas = mediaCanvas;
 	}
 	
 	

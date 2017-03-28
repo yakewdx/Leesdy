@@ -179,7 +179,7 @@ public class LDMultiLayerCanvas {
 //		for (LDCanvas layer : layers) {
 //			this.pane.getChildren().add(layer);
 //		}
-		this.pane.getChildren().add(container);
+		if(pane != null)this.pane.getChildren().add(container);
 	}
 	public Pane getContainer() {
 		return container;

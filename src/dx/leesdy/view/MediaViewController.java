@@ -1,6 +1,7 @@
 package dx.leesdy.view;
 
 import dx.leesdy.controller.LDControlCenter;
+import dx.leesdy.controller.LDWorkspaceManager;
 import dx.leesdy.model.LDMultiLayerCanvas;
 import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.model.Painter;
@@ -9,6 +10,7 @@ import dx.leesdy.model.paintcomponents.PDrawWav;
 import dx.leesdy.model.paintcomponents.PMDrawMediaInfo;
 import dx.leesdy.model.paintcomponents.PTestDrawWhiteBackground;
 import dx.leesdy.model.paintcomponents.PTimer;
+import dx.leesdy.utils.LDDebug;
 import dx.leesdy.utils.LDInitilizableComponent;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +25,8 @@ public class MediaViewController implements LDInitilizableComponent{
 	private LDStatusCenter statusCenter;
 	
 	private LDControlCenter controlCenter;
+	
+	private LDWorkspaceManager manager;
 	
 	@FXML
 	private Pane canvasPane;
@@ -40,6 +44,10 @@ public class MediaViewController implements LDInitilizableComponent{
 	private LDProgressBar progressBar;
 	
 
+	private Painter painter;
+	
+	private AnimationTimer timer;
+	
 	public LDStatusCenter getStatusCenter() {
 		return statusCenter;
 	}
@@ -90,12 +98,11 @@ public class MediaViewController implements LDInitilizableComponent{
 			
 		});
 		
-		// create multi layer canvas and painter
-		double width = this.canvasPane.getPrefWidth();
-		double height = this.canvasPane.getPrefHeight();
+
+		//LDMultiLayerCanvas canvas = new LDMultiLayerCanvas(width - 6, height - 6);
+		LDMultiLayerCanvas canvas = this.controlCenter.getMediaCanvas();
 		
-		LDMultiLayerCanvas canvas = new LDMultiLayerCanvas(width - 6, height - 6);
-		Painter painter = new Painter(canvas);
+		painter = new Painter(canvas);
 		canvas.setPane(canvasPane);
 		canvas.setLayoutY(3);
 		canvas.setLayoutX(3);
@@ -104,10 +111,11 @@ public class MediaViewController implements LDInitilizableComponent{
 		painter.addComponent(new PTestDrawWhiteBackground(1, this.statusCenter));
 		painter.addComponent(new PMDrawMediaInfo(4, this.statusCenter));
 		
+		
 		// run the painter.
 		//painter.start();
 		//new Thread(painter).start();
-		new AnimationTimer() {
+		timer = new AnimationTimer() {
 
 			@Override
 			public void handle(long now) {
@@ -115,7 +123,9 @@ public class MediaViewController implements LDInitilizableComponent{
 				painter.paint();
 			}
 			
-		}.start();
+		};
+		
+		timer.start();
 		
 		
 		// set the behaviors of slider and progress bar
@@ -131,5 +141,15 @@ public class MediaViewController implements LDInitilizableComponent{
 		});
 	}
 	
+	public void destroy() {
+		this.timer.stop();
+		this.timer = null;
+		this.painter = null;
+	}
+
+
+	public void setManager(LDWorkspaceManager manager) {
+		this.manager = manager;
+	}
 	
 }

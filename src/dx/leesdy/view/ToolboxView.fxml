@@ -38,6 +38,15 @@
                   </ImageView>
                </graphic>
             </LDToggleButton>
+            <LDButton fx:id="diarizationButton" info="diarization" mnemonicParsing="false" onAction="#handleDiarization">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../resources/icons/0.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </LDButton>
          </items>
       </ToolBar>
    </children>

@@ -20,7 +20,7 @@ public class Main extends Application {
 	
 	private AnchorPane root;
 	private LDScene scene;
-	private LDControlCenter controlCenter;
+	//private LDControlCenter controlCenter;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -30,7 +30,7 @@ public class Main extends Application {
 			primaryStage.getIcons().add(new Image("file:resources/icons/Icon2.png"));
 			setInitScene(primaryStage);
 			//scene.setOnKeyPressed(controlCenter);
-			scene.setOnKeyReleased(controlCenter);
+			//scene.setOnKeyReleased(controlCenter);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -47,12 +47,13 @@ public class Main extends Application {
 			root = BasicView;
 			
 			// init control center
-			controlCenter = new LDControlCenter();
-			controlCenter.init();
+//			controlCenter = new LDControlCenter();
+//			controlCenter.init();
 			
 			BasicViewController controller = (BasicViewController)loader.getController();
 			controller.setRoot(BasicView);
-			controller.setControlCenter(controlCenter);
+			//controller.setControlCenter(controlCenter);
+			controller.setMainStage(primaryStage);
 			
 			controller.init();
 			

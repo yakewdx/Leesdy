@@ -7,6 +7,7 @@
 package dx.leesdy.view;
 
 import dx.leesdy.controller.LDControlCenter;
+import dx.leesdy.controller.LDWorkspaceManager;
 import dx.leesdy.model.layout.LDButton;
 import dx.leesdy.model.layout.LDToggleButton;
 import dx.leesdy.player.LDWavPlayer;
@@ -20,7 +21,9 @@ import javafx.scene.media.MediaPlayer.Status;
 
 public class ToolboxViewController implements LDInitilizableComponent{
 
-	private LDControlCenter controlCenter;
+	private LDWorkspaceManager manager;
+	
+	private LDControlCenter currentControlCenter;
 	
 	private LDWavPlayer player;
 	
@@ -32,6 +35,9 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	
 	@FXML
 	private LDToggleButton addInfoButton;
+	
+	@FXML
+	private LDButton diarizationButton;
 	
 	
 	@FXML
@@ -45,10 +51,10 @@ public class ToolboxViewController implements LDInitilizableComponent{
 				// TODO Auto-generated method stub
 				if (newValue == true) {
 					LDDebug.print("Add component button : selected");
-					controlCenter.handleAddComponent();
+					currentControlCenter.handleAddComponent();
 				} else {
 					LDDebug.print("Add component button : unselected");
-					controlCenter.handleRemoveComponent("PDrawDiarizationResult");
+					currentControlCenter.handleRemoveComponent("PDrawDiarizationResult");
 				}
 			}
 			
@@ -78,7 +84,7 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	@FXML
     private void handlePause() {
     	//System.out.println("Pause clicked");
-    	this.controlCenter.handlePause();
+    	this.currentControlCenter.handlePause();
     	
     	//this.playButton.setText("Play");
     	//setPlayButtonState(true);
@@ -89,7 +95,7 @@ public class ToolboxViewController implements LDInitilizableComponent{
     private void handlePlay() {
     	// todo: Play wav
     	// System.out.println("Play clicked.");
-    	this.controlCenter.handlePlay();
+    	this.currentControlCenter.handlePlay();
     	//setPlayButtonState(false);
 
     }
@@ -97,14 +103,14 @@ public class ToolboxViewController implements LDInitilizableComponent{
     // Only for test
     @FXML
     private void handleAdd() {
-    	this.controlCenter.handleAddComponent();
+    	this.currentControlCenter.handleAddComponent();
     }
     
     @FXML
     private void handleStop() {
     	// todo: Stop music
     	// System.out.println("Stop clicked.");
-    	this.controlCenter.handleStop();
+    	this.currentControlCenter.handleStop();
     	this.playButton.setSelected(false);
     	//setPlayButtonState(true);
     }
@@ -127,14 +133,14 @@ public class ToolboxViewController implements LDInitilizableComponent{
 
 
 
-	public LDControlCenter getControlCenter() {
-		return controlCenter;
+	public LDControlCenter getCurrentControlCenter() {
+		return currentControlCenter;
 	}
 
 
 
-	public void setControlCenter(LDControlCenter controlCenter) {
-		this.controlCenter = controlCenter;
+	public void setCurrentControlCenter(LDControlCenter controlCenter) {
+		this.currentControlCenter = controlCenter;
 	}
 
 
@@ -142,8 +148,13 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		this.player = this.controlCenter.getPlayer();
-		this.playButton.selectedProperty().bindBidirectional(controlCenter.getPlayButtonSelectedProperty());
+		this.currentControlCenter = manager.getTop();
+		this.player = this.currentControlCenter.getPlayer();
+		this.playButton.selectedProperty().bindBidirectional(currentControlCenter.getPlayButtonSelectedProperty());
+	}
+
+	public void setManager(LDWorkspaceManager manager) {
+		this.manager = manager;
 	}
     
 }

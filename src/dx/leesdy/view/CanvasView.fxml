@@ -14,12 +14,13 @@
       <SplitPane fx:id="splitPane" dividerPositions="0.5" prefHeight="522.0" prefWidth="583.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <ListView fx:id="listView" maxWidth="200.0" minWidth="200.0" prefHeight="520.0" prefWidth="200.0" style="-fx-background-color: #7f7f7f;" styleClass="canvas_list_view" stylesheets="@../controller/application.css" />
-            <ScrollPane fx:id="scrollPane" prefHeight="200.0" prefWidth="200.0">
+            <ScrollPane fx:id="scrollPane"  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Pane fx:id="pane" styleClass="canvas_background_pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children></AnchorPane>
+                     	<ListView fx:id="mainListView" style="-fx-background-color: #7f7f7f;" styleClass="canvas_list_view" stylesheets="@../controller/application.css"  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                     </children>
+                </AnchorPane>
               </content>
             </ScrollPane>
          </items>
