@@ -13,6 +13,7 @@ import dx.leesdy.model.*;
 import dx.leesdy.model.paintcomponents.PDrawDiarizationResult;
 import dx.leesdy.model.paintcomponents.PDrawPlaybackState;
 import dx.leesdy.model.paintcomponents.PDrawReferencePlane;
+import dx.leesdy.model.paintcomponents.PDrawSelectedComponent;
 import dx.leesdy.model.paintcomponents.PDrawTimeAxis;
 import dx.leesdy.model.paintcomponents.PDrawVerticalLine;
 import dx.leesdy.model.paintcomponents.PDrawWav;
@@ -61,6 +62,7 @@ public class LDWavPlayer {
 		painter.addComponent(new PDrawTimeAxis(8,this.statusCenter));
 		painter.addComponent(new PDrawPlaybackState(5, this.statusCenter));
 		painter.addComponent(new PDrawReferencePlane(10, this.statusCenter));
+		painter.addComponent(new PDrawSelectedComponent(11, this.statusCenter));
 		
 		this.timer = new AnimationTimer() {
 

@@ -35,7 +35,7 @@ public class LDWorkspaceManager {
 	}
 
 	public void setCurrentlySelectedID(int currentlySelectedID) {
-		if (currentlySelectedID != -1) this.getControlCenterById(currentlySelectedID).setFocus(false);
+		if (this.currentlySelectedID.get() != -1) this.getControlCenterById(this.currentlySelectedID.get()).setFocus(false);
 		this.currentlySelectedID.set(currentlySelectedID);
 	}
 	

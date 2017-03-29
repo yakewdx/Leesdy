@@ -45,6 +45,13 @@ public class PMDrawMediaInfo extends PainterComponent {
 		//LDDebug.print(playbackTime);
 		gc.fillText(playbackTime, 10, 20);
 		
+		boolean selected = this.statusCenter.getSelected();
+		if (selected) {
+			gc.fillText("Selected", 10, 40);
+		} else {
+			gc.fillText("Unselected", 10, 40);
+		}
+		
 	}
 
 }
