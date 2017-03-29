@@ -59,10 +59,8 @@ public class LDDiarizationResultReader {
 	 */
 	public int readSegmentFromFile() {
 		
-		int lineCount = 0;
 		try {
 			for (String line : Files.readAllLines(Paths.get(segmentFile))) {
-				lineCount++;
 				CharSequence sequence = line.subSequence(0, 2);
 				
 				if (sequence.toString().equals(";;")) {

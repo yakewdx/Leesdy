@@ -33,18 +33,13 @@ public class PDrawReferencePlane extends PainterComponent {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		MediaPlayer player = this.statusCenter.getMediaPlayer();
 		Duration duration = player.getTotalDuration();
-		Double total_seconds = duration.toSeconds();
 		Double total_width = canvas.getWidth();
-		Double k = total_width / total_seconds;
-		Duration dr = duration.divide(20);
-		Duration pv = Duration.ZERO;
-		
+
 		if (!duration.isUnknown()) {
 			this.durationRetrieved = true;
 		}
 		
 		Double total_height = canvas.getHeight();
-		Double shifting = 10.0;
 		gc.setLineWidth(0.5);
 		gc.setStroke(Color.rgb(122,213,244));
 		

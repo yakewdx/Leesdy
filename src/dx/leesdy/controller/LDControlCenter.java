@@ -17,6 +17,10 @@ import javafx.util.Duration;
 
 public class LDControlCenter implements EventHandler<KeyEvent>{
 	
+	private int id;
+
+	private LDWorkspaceManager manager;
+	
 	/**
 	 *  Main media player
 	 */
@@ -71,6 +75,15 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 		this.init(filename);
 	}
 
+	public void setFocus(boolean focus) {
+		if (focus) {
+			this.manager.setCurrentlySelectedID(this.id);
+			statusCenter.setSelected(true);
+		} else {
+			statusCenter.setSelected(false);
+		}
+	}
+	
 	private void init(String name) {
 		
 		this.configurationLoader.loadConfig();
@@ -84,12 +97,15 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 			this.player.initPlayer();
 			this.mainCanvas = new LDMultiLayerCanvas(this.configurationLoader.getDefaultCanvasWidth(),
 												 this.configurationLoader.getDefaultCanvasHeight());
+			this.mainCanvas.setControlCenter(this);
 			this.mediaCanvas = new LDMultiLayerCanvas(132, 99);
+			this.mediaCanvas.setControlCenter(this);
 			playButtonSelectedProperty = new SimpleBooleanProperty();
 			this.mainCanvas.setOnMouseClicked(new EventHandler<MouseEvent> () {
 			@Override
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
+				setFocus(true);
 				handleSeek();
 			}
 			
@@ -102,15 +118,15 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 			}
 		}
 		
-		this.playButtonSelectedProperty.addListener((changeEvent, oldValue, newValue) -> {
-			if (newValue.booleanValue() == true) {
-				LDDebug.print("ControlCenter : Play button selected.");
-				this.handlePlay();
-			} else {
-				LDDebug.print("ControlCenter : Play button unselected.");
-				this.handlePause();
-			}
-		});
+//		this.playButtonSelectedProperty.addListener((changeEvent, oldValue, newValue) -> {
+//			if (newValue.booleanValue() == true) {
+//				LDDebug.print("ControlCenter : Play button selected.");
+//				this.handlePlay();
+//			} else {
+//				LDDebug.print("ControlCenter : Play button unselected.");
+//				this.handlePause();
+//			}
+//		});
 	}
 
 	/**
@@ -202,6 +218,16 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 		this.painter = painter;
 	}
 
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	
 	public LDConfigurationLoader getConfigurationLoader() {
 		return configurationLoader;
 	}
@@ -254,6 +280,14 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 
 	public void setMediaCanvas(LDMultiLayerCanvas mediaCanvas) {
 		this.mediaCanvas = mediaCanvas;
+	}
+
+	public LDWorkspaceManager getManager() {
+		return manager;
+	}
+
+	public void setManager(LDWorkspaceManager manager) {
+		this.manager = manager;
 	}
 	
 	

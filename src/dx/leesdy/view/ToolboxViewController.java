@@ -13,6 +13,8 @@ import dx.leesdy.model.layout.LDToggleButton;
 import dx.leesdy.player.LDWavPlayer;
 import dx.leesdy.utils.LDDebug;
 import dx.leesdy.utils.LDInitilizableComponent;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -21,11 +23,13 @@ import javafx.scene.media.MediaPlayer.Status;
 
 public class ToolboxViewController implements LDInitilizableComponent{
 
+	private boolean inited;
+	
 	private LDWorkspaceManager manager;
 	
 	private LDControlCenter currentControlCenter;
 	
-	private LDWavPlayer player;
+	private IntegerProperty selectedControlCenterID;
 	
 	@FXML
 	private LDToggleButton playButton;
@@ -42,6 +46,12 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	
 	@FXML
 	private void initialize() {
+		
+		this.inited = false;
+		
+		this.selectedControlCenterID = new SimpleIntegerProperty();
+		
+		this.loadButtonStates();
 		
 		//player = new LDWavPlayer("resources/output.wav");
 		this.addInfoButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -67,13 +77,22 @@ public class ToolboxViewController implements LDInitilizableComponent{
 				// TODO Auto-generated method stub
 				if (newValue == true) {
 					LDDebug.print("Play button : selected");
-					//controlCenter.handlePlay();
+					currentControlCenter.handlePlay();
 				} else {
 					LDDebug.print("Play button : unselected");
 //					Status status = player.getStatusCenter().getMediaPlayer().getStatus();
 //					LDDebug.print(status.name());
-					//controlCenter.handlePause();
+					currentControlCenter.handlePause();
 				}
+			}
+		});
+		
+		this.selectedControlCenterID.addListener(new ChangeListener<Number> () {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				OnTrackSelected(newValue.intValue());
 			}
 			
 		});
@@ -81,24 +100,24 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	
 	
 	
-	@FXML
-    private void handlePause() {
-    	//System.out.println("Pause clicked");
-    	this.currentControlCenter.handlePause();
-    	
-    	//this.playButton.setText("Play");
-    	//setPlayButtonState(true);
-
-    }
-    
-	@FXML
-    private void handlePlay() {
-    	// todo: Play wav
-    	// System.out.println("Play clicked.");
-    	this.currentControlCenter.handlePlay();
-    	//setPlayButtonState(false);
-
-    }
+//	@FXML
+//    private void handlePause() {
+//    	//System.out.println("Pause clicked");
+//    	this.currentControlCenter.handlePause();
+//    	
+//    	//this.playButton.setText("Play");
+//    	//setPlayButtonState(true);
+//
+//    }
+//    
+//	@FXML
+//    private void handlePlay() {
+//    	// todo: Play wav
+//    	// System.out.println("Play clicked.");
+//    	this.currentControlCenter.handlePlay();
+//    	//setPlayButtonState(false);
+//
+//    }
 	
     // Only for test
     @FXML
@@ -119,7 +138,8 @@ public class ToolboxViewController implements LDInitilizableComponent{
     private void handleDiarization() {
     	// todo: diarization
     	System.out.println("Start Diarization");
-    	this.player.diarization();
+    	//this.player.diarization();
+    	this.currentControlCenter.getPlayer().diarization();
     }
     
 //    public void setPlayButtonState(boolean toShowPlay) {
@@ -127,10 +147,34 @@ public class ToolboxViewController implements LDInitilizableComponent{
 //    	pauseButton.setVisible(!toShowPlay);
 //    }
     
-    public LDWavPlayer getPlayer() {
-    	return player;
+    
+    private void OnTrackSelected(int id) {
+    	this.playButton.selectedProperty().unbind();
+    	LDDebug.print("ToolboxViewController : Track selected.");
+    	this.currentControlCenter = this.manager.getControlCenterById(id);
+		this.playButton.selectedProperty().bindBidirectional(this.currentControlCenter.getPlayButtonSelectedProperty());
+    	this.loadButtonStates();
     }
-
+    
+    private void loadButtonStates() {
+    	if (this.currentControlCenter == null) {
+    		this.playButton.setDisable(true);
+    		this.stopButton.setDisable(true);
+    		this.addInfoButton.setDisable(true);
+    		this.diarizationButton.setDisable(true);
+    	} else {
+    		Status playbackStatus = this.currentControlCenter.getPlayer().getPlayer().getStatus();
+    		this.playButton.setDisable(false);
+    		if (playbackStatus == Status.PLAYING) {
+    			this.playButton.setSelected(true);
+    		} else {
+    			this.playButton.setSelected(false);
+    		}
+    		this.stopButton.setDisable(false);
+    		this.addInfoButton.setDisable(false);
+    		this.diarizationButton.setDisable(false);
+    	}
+    }
 
 
 	public LDControlCenter getCurrentControlCenter() {
@@ -148,9 +192,20 @@ public class ToolboxViewController implements LDInitilizableComponent{
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		this.currentControlCenter = manager.getTop();
-		this.player = this.currentControlCenter.getPlayer();
-		this.playButton.selectedProperty().bindBidirectional(currentControlCenter.getPlayButtonSelectedProperty());
+		// this.currentControlCenter = manager.getTop();
+		//this.selectedControlCenterID.bindBidirectional(this.manager.getCurrentlySelectedIDProperty());
+		if (!this.inited) {
+			LDDebug.print("ToolboxViewController : not inited , ID " + manager.getTopID());
+			this.selectedControlCenterID.bindBidirectional(manager.getCurrentlySelectedIDProperty());
+			OnTrackSelected(manager.getTopID());
+			this.inited = true;
+		} else {
+			LDDebug.print("ToolboxViewController : inited , ID " + manager.getTopID());
+			this.selectedControlCenterID.set(manager.getTopID());
+		}
+		//
+		//this.player = this.currentControlCenter.getPlayer();
+		//this.playButton.selectedProperty().bindBidirectional(currentControlCenter.getPlayButtonSelectedProperty());
 	}
 
 	public void setManager(LDWorkspaceManager manager) {

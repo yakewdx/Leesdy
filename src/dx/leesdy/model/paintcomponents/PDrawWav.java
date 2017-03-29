@@ -37,7 +37,6 @@ public class PDrawWav extends PainterComponent {
 			double canvasWidth = canvas.getWidth();
 			double canvasHeight = canvas.getHeight();
 			int length = data[0].length;
-			int step = (int) (length / canvasWidth);
 			double k = canvasHeight / 2.0 / 32768.0;
 			double x = 0, y = 0, prevX = 0, prevY = 0;
 //			for (int i = 0; i < canvasWidth; ++i) {

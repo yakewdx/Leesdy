@@ -6,11 +6,8 @@ import dx.leesdy.model.LDMultiLayerCanvas;
 import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.model.Painter;
 import dx.leesdy.model.layout.*;
-import dx.leesdy.model.paintcomponents.PDrawWav;
 import dx.leesdy.model.paintcomponents.PMDrawMediaInfo;
 import dx.leesdy.model.paintcomponents.PTestDrawWhiteBackground;
-import dx.leesdy.model.paintcomponents.PTimer;
-import dx.leesdy.utils.LDDebug;
 import dx.leesdy.utils.LDInitilizableComponent;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
@@ -27,6 +24,9 @@ public class MediaViewController implements LDInitilizableComponent{
 	private LDControlCenter controlCenter;
 	
 	private LDWorkspaceManager manager;
+	
+	@FXML
+	private Pane mainPane;
 	
 	@FXML
 	private Pane canvasPane;
@@ -95,7 +95,6 @@ public class MediaViewController implements LDInitilizableComponent{
 					progressBar.setDisable(false);
 				}
 			}
-			
 		});
 		
 
@@ -138,6 +137,10 @@ public class MediaViewController implements LDInitilizableComponent{
 				controlCenter.getPlayer().getPlayer().setVolume(newValue.doubleValue() / 100);
 			}
 			
+		});
+		
+		this.mainPane.setOnMouseClicked(event -> {
+			controlCenter.setFocus(true);
 		});
 	}
 	

@@ -1,7 +1,6 @@
 package dx.leesdy.model.paintcomponents;
 
 import dx.leesdy.model.LDStatusCenter;
-import dx.leesdy.utils.LDDebug;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.MediaPlayer;

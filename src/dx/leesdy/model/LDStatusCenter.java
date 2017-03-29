@@ -1,6 +1,8 @@
 package dx.leesdy.model;
 
 import dx.leesdy.utils.LDDiarizationResultReader;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.media.MediaPlayer;
 
 public class LDStatusCenter {
@@ -26,12 +28,14 @@ public class LDStatusCenter {
 	 */
 	private DeviceState deviceState;
 	
+	private BooleanProperty selected;
 	
 	public String getSouceFile() {
 		return this.getSource().getFilename();
 	}
 	
 	public LDStatusCenter(String filename) {
+		this.selected = new SimpleBooleanProperty();
 		this.source = new WavWrapper(filename);
 		this.deviceState = DeviceState.getInstance();
 	}
@@ -67,6 +71,21 @@ public class LDStatusCenter {
 	public void setSource(WavWrapper source) {
 		this.source = source;
 	}
+
+	public BooleanProperty getSelectedProperty() {
+		return selected;
+	}
+
+	public void setSelectedProperty(BooleanProperty selected) {
+		this.selected = selected;
+	}
 	
+	public boolean getSelected() {
+		return selected.get();
+	}
+	
+	public void setSelected(boolean selected) {
+		this.selected.set(selected);
+	}
 	
 }

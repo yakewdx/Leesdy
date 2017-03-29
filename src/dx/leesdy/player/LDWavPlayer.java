@@ -1,18 +1,15 @@
 package dx.leesdy.player;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaMarkerEvent;
 import javafx.scene.media.MediaPlayer;
 import dx.leesdy.model.*;
-import dx.leesdy.model.layout.LDCanvas;
 import dx.leesdy.model.paintcomponents.PDrawDiarizationResult;
 import dx.leesdy.model.paintcomponents.PDrawPlaybackState;
 import dx.leesdy.model.paintcomponents.PDrawReferencePlane;
@@ -29,15 +26,11 @@ import dx.leesdy.utils.*;
  */
 public class LDWavPlayer {
 	
-	// filename
-	//	private String source;
-	//	private Media media;
-	//	private WavWrapper wav;
+
 	private MediaPlayer mediaPlayer;
 	private LDStatusCenter statusCenter;
 	private Painter painter;
 	private AnimationTimer timer;
-	//	private LDDiarizationResultReader reader;
 	
 	public Painter getPainter() {
 		return painter;
@@ -54,9 +47,6 @@ public class LDWavPlayer {
 	public LDWavPlayer(String filename, LDStatusCenter statusCenter) {
 		this.isInitializationSucceeded = false;
 		this.statusCenter = statusCenter;
-		//this.statusCenter = new LDStatusCenter(filename);
-		//this.statusCenter.getSource(). source = filename;
-		//initPlayer();
 	}
 	
 	public boolean isInitializationSuceeded() {
@@ -72,10 +62,6 @@ public class LDWavPlayer {
 		painter.addComponent(new PDrawPlaybackState(5, this.statusCenter));
 		painter.addComponent(new PDrawReferencePlane(10, this.statusCenter));
 		
-		//new Thread(painter).start();
-		//painter.start();
-		//painter.run();
-		
 		this.timer = new AnimationTimer() {
 
 			@Override
@@ -85,6 +71,8 @@ public class LDWavPlayer {
 			}
 			
 		};
+		
+		
 		timer.start();
 		
 	}
@@ -234,13 +222,6 @@ public class LDWavPlayer {
 		});
 	}
 	
-	private void onPlay() {
-		this.play();
-	}
-	
-	private void onStop() {
-		this.stop();
-	}
 	
 	public MediaPlayer getPlayer() {
 		return this.mediaPlayer;

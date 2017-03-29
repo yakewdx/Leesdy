@@ -1,13 +1,8 @@
 package dx.leesdy.model;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.concurrent.TimeUnit;
-
 import dx.leesdy.model.paintcomponents.PainterComponent;
 import dx.leesdy.utils.LDDebug;
-import dx.leesdy.utils.LDExecutor;
-import javafx.scene.canvas.Canvas;
 
 public class Painter implements Runnable {
 
@@ -79,14 +74,9 @@ public class Painter implements Runnable {
 	}
 	
 	public void paint() {
-		list.sort(new Comparator<PainterComponent> () {
 
-			@Override
-			public int compare(PainterComponent arg0, PainterComponent arg1) {
-				// TODO Auto-generated method stub
-				return arg1.compareTo(arg0);
-			}
-			
+		list.sort((arg0, arg1) -> {
+			return arg1.compareTo(arg0);
 		});
 			
 		for (int i = 0; i < list.size(); i++) {

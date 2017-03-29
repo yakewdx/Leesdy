@@ -5,12 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-
-import java.util.ArrayList;
-
 import dx.leesdy.model.*;
-import dx.leesdy.player.LDWavPlayer;
-import dx.leesdy.utils.LDDiarizationResultReader;
 import dx.leesdy.utils.LDSegment;
 
 public class PDrawVerticalLine extends PDrawPlaybackState {

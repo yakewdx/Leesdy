@@ -11,19 +11,14 @@ import java.io.IOException;
 import dx.leesdy.controller.LDControlCenter;
 import dx.leesdy.controller.LDWorkspaceManager;
 import dx.leesdy.controller.Main;
-import dx.leesdy.model.LDMultiLayerCanvas;
 import dx.leesdy.utils.LDInitilizableComponent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
 
 /**
  * 

@@ -13,10 +13,7 @@ import dx.leesdy.model.layout.LDCanvas;
 import dx.leesdy.utils.LDCanvasFactory;
 import dx.leesdy.utils.LDDebug;
 import javafx.event.EventHandler;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 /**
  *
@@ -26,6 +23,8 @@ public class LDMultiLayerCanvas {
 	double width;
 	double height;
 
+	private LDControlCenter controlCenter;
+	
 	private MouseState mouseState;
 
 	private String info;
@@ -49,45 +48,27 @@ public class LDMultiLayerCanvas {
 		this.mouseState = new MouseState();
 		this.layers = new ArrayList<LDCanvas>();
 
-		// only for test
-		container.setOnMouseClicked(new EventHandler<MouseEvent> () {
-
-			@Override
-			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
-				LDDebug.print("LDMultiLayerCanvas : Mouse Clicked");
-			}
-
+		container.setOnMouseClicked(event -> {
+			LDDebug.print("LDMultiLayerCanvas : Mouse Clicked");
 		});
 
-		container.setOnMouseMoved(new EventHandler<MouseEvent> () {
-
-			@Override
-			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
-				//System.out.println("Mouse Moved");
-				mouseState.setMouseInCanvas(true);
-				mouseState.setX(event.getX());
-				mouseState.setY(event.getY());
-			}
-
+		container.setOnMouseMoved(event -> {
+			// TODO Auto-generated method stub
+			//System.out.println("Mouse Moved");
+			mouseState.setMouseInCanvas(true);
+			mouseState.setX(event.getX());
+			mouseState.setY(event.getY());
 		});
 
-		container.setOnMouseExited(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
-				mouseState.setMouseInCanvas(false);
-				mouseState.setX(event.getX());
-				mouseState.setY(event.getY());
-			}
-
+		container.setOnMouseExited(event -> {
+			// TODO Auto-generated method stub
+			mouseState.setMouseInCanvas(false);
+			mouseState.setX(event.getX());
+			mouseState.setY(event.getY());
 		});
 		
 	}
 	public LDMultiLayerCanvas() {
-
 		// fix width
 		this.width = 400;
 		this.height = 200;
@@ -192,6 +173,12 @@ public class LDMultiLayerCanvas {
 	}
 	public void setInfo(String info) {
 		this.info = info;
+	}
+	public LDControlCenter getControlCenter() {
+		return controlCenter;
+	}
+	public void setControlCenter(LDControlCenter controlCenter) {
+		this.controlCenter = controlCenter;
 	}
 
 }

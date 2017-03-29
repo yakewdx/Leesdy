@@ -1,10 +1,8 @@
 package dx.leesdy.model.paintcomponents;
 
 import dx.leesdy.model.LDStatusCenter;
-import dx.leesdy.utils.LDDebug;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 
@@ -16,10 +14,6 @@ public class PMDrawMediaInfo extends PainterComponent {
 	public PMDrawMediaInfo(int priority, LDStatusCenter statusCenter) {
 		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
-		
-		MediaPlayer mediaPlayer = this.statusCenter.getMediaPlayer();
-		
-
 	}
 
 	@Override

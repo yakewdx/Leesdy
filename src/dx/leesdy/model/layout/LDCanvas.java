@@ -6,7 +6,6 @@
  */
 package dx.leesdy.model.layout;
 
-import dx.leesdy.model.DeviceState;
 import dx.leesdy.model.MouseState;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;

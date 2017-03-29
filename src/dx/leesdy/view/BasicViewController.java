@@ -1,15 +1,12 @@
 package dx.leesdy.view;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import dx.leesdy.controller.LDControlCenter;
 import dx.leesdy.controller.LDWorkspaceManager;
 import dx.leesdy.controller.Main;
-import dx.leesdy.player.LDWavPlayer;
 import dx.leesdy.utils.LDDebug;
 import dx.leesdy.utils.LDInformationCenter;
-import dx.leesdy.utils.LDInitilizableComponent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -78,6 +75,7 @@ public class BasicViewController {
     private boolean initControlCenterFromFile(String filename) {
     	LDControlCenter controlCenter = new LDControlCenter(filename);
     	this.manager.addControlCenter(controlCenter);
+    	controlCenter.setFocus(true);
     	//this.setControlCenter();
     	this.initComponents();
     	return true;

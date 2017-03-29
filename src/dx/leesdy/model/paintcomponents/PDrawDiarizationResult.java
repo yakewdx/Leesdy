@@ -13,9 +13,6 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 import dx.leesdy.model.LDStatusCenter;
-import dx.leesdy.model.WavWrapper;
-import dx.leesdy.player.LDWavPlayer;
-import dx.leesdy.utils.LDDiarizationResultReader;
 import dx.leesdy.utils.LDSegment;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
