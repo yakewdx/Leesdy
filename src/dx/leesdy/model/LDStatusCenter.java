@@ -4,6 +4,7 @@ import dx.leesdy.utils.LDDiarizationResultReader;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.media.MediaPlayer;
+import dx.leesdy.diarization.LDDiarizationResultReaderT;
 import dx.leesdy.utils.*;
 
 public class LDStatusCenter {
@@ -20,14 +21,20 @@ public class LDStatusCenter {
 
 	/**
 	 *  Store diarization result
+	 *  for LIUM package
 	 */
 	private LDDiarizationResultReader reader;
 	
+	
+	private LDDiarizationResultReaderT reader_T;
 	
 	/**
 	 *  Store device state
 	 */
 	private DeviceState deviceState;
+	
+	
+	
 	
 	private BooleanProperty selected;
 	
@@ -94,6 +101,14 @@ public class LDStatusCenter {
 	
 	public void setSelected(boolean selected) {
 		this.selected.set(selected);
+	}
+
+	public LDDiarizationResultReaderT getReader_T() {
+		return reader_T;
+	}
+
+	public void setReader_T(LDDiarizationResultReaderT reader_T) {
+		this.reader_T = reader_T;
 	}
 	
 }

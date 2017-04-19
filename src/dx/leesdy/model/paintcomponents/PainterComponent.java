@@ -55,9 +55,11 @@ public abstract class PainterComponent implements Comparable<PainterComponent> {
 	public abstract void updateState();
 	
 	public void update() {
+		canvas.getGraphicsContext2D().save();
 		paint(canvas);
 		needToUpdate = false;
 		this.drawingCount++;
+		canvas.getGraphicsContext2D().restore();
 	}
 	
 	public abstract void paint(Canvas canvas);

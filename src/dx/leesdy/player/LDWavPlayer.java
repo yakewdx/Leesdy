@@ -9,6 +9,7 @@ import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaMarkerEvent;
 import javafx.scene.media.MediaPlayer;
+import dx.leesdy.diarization.LDDiarizationT;
 import dx.leesdy.model.*;
 import dx.leesdy.model.paintcomponents.PDrawDiarizationResult;
 import dx.leesdy.model.paintcomponents.PDrawPlaybackState;
@@ -215,10 +216,13 @@ public class LDWavPlayer {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				String output = DiarizationOutput;
-				new LDDiarization(statusCenter.getSouceFile(), output).diarization();
-				LDDiarizationResultReader reader = new LDDiarizationResultReader(output);
-				statusCenter.setReader(reader);
+//				String output = DiarizationOutput;
+//				new LDDiarization(statusCenter.getSouceFile(), output).diarization();
+//				LDDiarizationResultReader reader = new LDDiarizationResultReader(output);
+//				statusCenter.setReader(reader);
+				
+				// for test
+				LDDiarizationT.diarization(statusCenter);
 			}
 			
 		});

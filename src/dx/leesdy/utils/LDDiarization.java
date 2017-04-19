@@ -6,11 +6,11 @@
  */
 package dx.leesdy.utils;
 
-import fr.lium.spkDiarization.system.*;
+import dx.leesdy.diarization.*;
 /**
  * 
  */
-public class LDDiarization {
+public class LDDiarization{
 
 	private String inputFile;
 	
@@ -27,7 +27,7 @@ public class LDDiarization {
 		args[1] = "--sOutputMask=" + outputFile;
 		args[2] = "--doCEClustering";
 		args[3] = "showName";
-		Diarization.main(args);
+		LDDiarizationBase.main(args);
 	}
 
 

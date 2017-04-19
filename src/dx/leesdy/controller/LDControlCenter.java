@@ -4,6 +4,7 @@ import dx.leesdy.model.LDMultiLayerCanvas;
 import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.model.MouseState;
 import dx.leesdy.model.Painter;
+import dx.leesdy.model.paintcomponents.PDrawFrameEnergy;
 import dx.leesdy.player.LDWavPlayer;
 import dx.leesdy.utils.LDConfigurationLoader;
 import dx.leesdy.utils.LDDebug;
@@ -57,6 +58,9 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 	}
 
 	private BooleanProperty playButtonSelectedProperty;
+	
+	private BooleanProperty addButtonSelectedProperty;
+	
 	/**
 	 *  Configuration loader
 	 *  If set, it will load configs from the config file
@@ -100,7 +104,8 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 			this.mainCanvas.setControlCenter(this);
 			this.mediaCanvas = new LDMultiLayerCanvas(132, 99);
 			this.mediaCanvas.setControlCenter(this);
-			playButtonSelectedProperty = new SimpleBooleanProperty();
+			this.playButtonSelectedProperty = new SimpleBooleanProperty();
+			this.addButtonSelectedProperty = new SimpleBooleanProperty();
 			this.mainCanvas.setOnMouseClicked(new EventHandler<MouseEvent> () {
 			@Override
 			public void handle(MouseEvent event) {
@@ -118,6 +123,25 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 			}
 		}
 		
+		this.playButtonSelectedProperty.addListener((obs, ov, nv) -> {
+			if (nv == true) {
+				LDDebug.print("ControlCenter : Play button selected.");
+				this.handlePlay();
+			} else {
+				LDDebug.print("ControlCenter : Play button unslected.");
+				this.handlePause();
+			}
+		});
+		
+		this.addButtonSelectedProperty.addListener((obs, ov, nv) -> {
+			if (nv == true) {
+				LDDebug.print("ControlCenter : Add component button selected.");
+				this.handleAddComponent();
+			} else {
+				LDDebug.print("ControlCenter : Add component button unselected.");
+				this.handleRemoveComponent("PDrawDiarizationResult");
+			}
+		});
 //		this.playButtonSelectedProperty.addListener((changeEvent, oldValue, newValue) -> {
 //			if (newValue.booleanValue() == true) {
 //				LDDebug.print("ControlCenter : Play button selected.");
@@ -129,6 +153,11 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 //		});
 	}
 
+	public void diarization() {
+		painter.addComponent(new PDrawFrameEnergy(15,this.statusCenter));
+		this.player.diarization();
+	}
+	
 	/**
 	 * Event Handler: Play
 	 */
@@ -288,6 +317,14 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 
 	public void setManager(LDWorkspaceManager manager) {
 		this.manager = manager;
+	}
+
+	public BooleanProperty getAddButtonSelectedProperty() {
+		return addButtonSelectedProperty;
+	}
+
+	public void setAddButtonSelectedProperty(BooleanProperty addButtonSelectedProperty) {
+		this.addButtonSelectedProperty = addButtonSelectedProperty;
 	}
 	
 	

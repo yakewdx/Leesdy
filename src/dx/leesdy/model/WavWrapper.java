@@ -48,5 +48,13 @@ public class WavWrapper {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+	
+	public long getSamplingRate() {
+		return this.fileReader.getSampleRate();
+	}
+	
+	public long getNumChannels() {
+		return this.fileReader.getNumChannels();
+	}
 
 }
