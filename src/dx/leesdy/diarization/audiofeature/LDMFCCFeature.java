@@ -19,6 +19,8 @@ public class LDMFCCFeature {
 	
 	private long samplingRate;
 	
+	private double eps = 1e-6;
+	
 	private double lowerFreq;
 	private double upperFreq;
 	
@@ -38,7 +40,7 @@ public class LDMFCCFeature {
 		this.mfccCount = 14;
 		this.mfcc = new ArrayList<double[]> ();
 		this.reader = reader;
-		energy = new double[segments.size()];
+		energy = new double[segments.size() + 1];
 		reader.setMfccEnergy(energy);
 		calc(segments);
 	}
@@ -49,9 +51,9 @@ public class LDMFCCFeature {
 		int cc = 1;
 		for (double[] seg : segments) {
 			double N = (double) seg.length;
-//			if (cc == 1380) {
-//				LDDebug.print(".1380");
-//			}
+			if (cc == 199) {
+				LDDebug.print(".199");
+			}
 			LDComplex[] Xa = new LDComplex[(int) N];
 			for (int i = 0 ; i< N; i++) {
 				Xa[i] = new LDComplex(seg[i], 0);
@@ -70,17 +72,24 @@ public class LDMFCCFeature {
 			
 			double [] s = applyMelFilterBank(powSpec);
 			double [] C = LDTransform.dct(s, mfccCount);
-			LDDebug.print("LDMFCCFeature : Calculating MFCC " + cc+ " / " + segments.size() + ".");
+			//LDDebug.print("LDMFCCFeature : Calculating MFCC " + cc+ " / " + segments.size() + ".");
 			mfcc.add(C);
 			cc++;
 		}
 		
-		
+		LDDebug.print("errmsg");
 		// delta of mfcc
 		ArrayList<double[]> delta = calcDelta(mfcc);
 		ArrayList<double[]> delta_delta = calcDelta(delta);
 		
 		this.feature = this.concat(mfcc, delta, delta_delta);
+//		for (int i = 0; i < this.feature.size(); i++) {
+//			double[] j = this.feature.get(i);
+//			for (int k = 0; k < j.length; k++) {
+//				System.out.printf("%f ", j[k]);
+//			}
+//			System.out.println();
+//		}
 		
 	}
 	
@@ -109,7 +118,7 @@ public class LDMFCCFeature {
 					res[m-1] += powerSpectrum[k] * t;
 				}
 			}
-			res[m-1] = Math.log(res[m-1]);
+			res[m-1] = Math.log(res[m-1] + eps);
 		}
 		
 		return res;

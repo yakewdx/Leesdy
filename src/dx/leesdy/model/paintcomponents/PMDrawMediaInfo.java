@@ -38,6 +38,9 @@ public class PMDrawMediaInfo extends PainterComponent {
 		
 		String playbackTime = String.format("%02d:%02d / %02d:%02d", cur_minutes, cur_seconds, total_minutes, total_seconds);
 		
+		int volume = (int)(mediaPlayer.getVolume() * 100);
+		String s_volume = String.format("%02d", volume);
+		
 		//if(this.isNeedToPrintDebugMsg())LDDebug.print("PMDrawMediaInfo : " + playbackTime);
 		
 		gc.setFill(Color.BLUEVIOLET);
@@ -45,6 +48,7 @@ public class PMDrawMediaInfo extends PainterComponent {
 		//LDDebug.print(playbackTime);
 		gc.fillText(playbackTime, 10, 20);
 		
+		gc.fillText(s_volume, 10, 60);
 		boolean selected = this.statusCenter.getSelected();
 		if (selected) {
 			gc.fillText("Selected", 10, 40);

@@ -41,9 +41,9 @@ public class LDSegmentation {
 		// pre-emphasize
 		double [] data = new double[data_s.length];
 		
-		for (int i = 0; i < data.length; i++) {
-			data[i] = data_s[i];
-			data[i] = 1 - mu * (1 / data[i]);
+		data[0] = data_s[0];
+		for (int i = 1; i < data.length; i++) {
+			data[i] = data_s[i] - mu * (data_s[i-1]);
 		}
 		
 		// set step and length of each segment

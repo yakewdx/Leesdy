@@ -21,13 +21,20 @@ public class PDrawFrameEnergy extends PainterComponent {
 	@Override
 	public void updateState() {
 		// TODO Auto-generated method stub
-		if (statusCenter.getReader_T().isNeedUpdate()) this.setNeedToUpdate();
-		else this.setNeedToUpdate(false);
+		if (statusCenter.getReader_T() != null) {
+			if (statusCenter.getReader_T().isNeedUpdate()) this.setNeedToUpdate();
+			else this.setNeedToUpdate(false);
+		} else {
+			this.setNeedToUpdate(false);
+		}
+		
 	}
 
 	@Override
 	public void paint(Canvas canvas) {
 		// TODO Auto-generated method stub
+		
+		LDDebug.print("PDrawFrameEnergy : updating");
 		double [] energy = statusCenter.getReader_T().getMfccEnergy();
 		
 		double step = statusCenter.getReader_T().getSegStep();
