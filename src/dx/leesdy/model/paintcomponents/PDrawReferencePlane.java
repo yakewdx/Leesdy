@@ -15,6 +15,7 @@ public class PDrawReferencePlane extends PainterComponent {
 		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
 		this.durationRetrieved = false;
+		this.name = "PDrawReferencePlane";
 	}
 
 	@Override

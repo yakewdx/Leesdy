@@ -10,6 +10,7 @@ public class PTestDrawWhiteBackground extends PainterComponent {
 	public PTestDrawWhiteBackground(int priority, LDStatusCenter statusCenter) {
 		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
+		this.name = "PTestDrawWhiteBackground";
 	}
 
 	@Override

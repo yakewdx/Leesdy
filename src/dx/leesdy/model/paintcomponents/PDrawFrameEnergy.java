@@ -16,6 +16,7 @@ public class PDrawFrameEnergy extends PainterComponent {
 		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
 		counter = 0;
+		this.name = "PDrawFrameEnergy";
 	}
 
 	@Override

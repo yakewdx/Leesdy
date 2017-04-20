@@ -154,7 +154,8 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 	}
 
 	public void diarization() {
-		painter.addComponent(new PDrawFrameEnergy(15,this.statusCenter));
+		if (painter.getComponentByName("PDrawFrameEnergy") == null)
+			painter.addComponent(new PDrawFrameEnergy(15,this.statusCenter));
 		this.player.diarization();
 	}
 	

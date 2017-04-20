@@ -17,6 +17,7 @@ public class PDrawSelectedComponent extends PainterComponent{
 		statusCenter.getSelectedProperty().addListener((a,ov,nv) -> {
 			this.updated = false;
 		});
+		this.name = "PDrawSelectedComplnent";
 	}
 
 	@Override
