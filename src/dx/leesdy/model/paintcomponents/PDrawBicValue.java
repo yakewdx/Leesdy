@@ -1,3 +1,9 @@
+/**
+ * Leesdy
+ * dx.leesdy.model.paintcomponents
+ * Author: DxWang PDrawBicValue.java
+ * Created at:2017年4月26日
+ */
 package dx.leesdy.model.paintcomponents;
 
 import dx.leesdy.model.LDStatusCenter;
@@ -8,17 +14,27 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-public class PDrawFrameEnergy extends PainterComponent {
+/**
+ * 
+ */
+public class PDrawBicValue extends PainterComponent {
 
 	int counter;
-	
-	public PDrawFrameEnergy(int priority, LDStatusCenter statusCenter) {
+
+	/**
+	 * @param priority
+	 * @param statusCenter
+	 */
+	public PDrawBicValue(int priority, LDStatusCenter statusCenter) {
 		super(priority, statusCenter);
 		// TODO Auto-generated constructor stub
 		counter = 0;
-		this.name = "PDrawFrameEnergy";
+		this.name = "PDrawBicValue";
 	}
 
+	/* (non-Javadoc)
+	 * @see dx.leesdy.model.paintcomponents.PainterComponent#updateState()
+	 */
 	@Override
 	public void updateState() {
 		// TODO Auto-generated method stub
@@ -28,26 +44,27 @@ public class PDrawFrameEnergy extends PainterComponent {
 		} else {
 			this.setNeedToUpdate(false);
 		}
-		
 	}
 
+	/* (non-Javadoc)
+	 * @see dx.leesdy.model.paintcomponents.PainterComponent#paint(javafx.scene.canvas.Canvas)
+	 */
 	@Override
 	public void paint(Canvas canvas) {
 		// TODO Auto-generated method stub
-		
-		//LDDebug.print("PDrawFrameEnergy : updating");
-		double [] energy = statusCenter.getReader_T().getMfccEnergy();
-		
+		//LDDebug.print("PDrawBicValue : updating");
+		double [] bic = statusCenter.getReader_T().getBicValue();
+		int window_size = statusCenter.getReader_T().getBicWindowSize();
 		double step = statusCenter.getReader_T().getSegStep();
 		double length = statusCenter.getReader_T().getSegLen();
 		
-		if (energy != null) {
+		if (bic != null) {
 			// find min and max
 			double min = Double.MAX_VALUE;
 			double max = -Double.MAX_VALUE;
-			for (int i = 1; i < energy.length - 51; i++) {
-				if (min > energy[i]) min = energy[i];
-				if (max < energy[i] && !Double.isInfinite(energy[i])) max = energy[i];
+			for (int i = 0; i < bic.length; i++) {
+				if (min > bic[i]) min = bic[i];
+				if (max < bic[i] && !Double.isInfinite(bic[i])) max = bic[i];
 			}
 			
 			GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -63,10 +80,10 @@ public class PDrawFrameEnergy extends PainterComponent {
 			double prevX = 0;
 			double prevY = canvasHeight;
 			gc.setStroke(Color.WHITE);
-			for (int i = 1; i < energy.length; i++) {
-				double time = (i-1) * step + length / 2;
+			for (int i = 0; i < bic.length; i++) {
+				double time = window_size * step + i * step+ length / 2;
 				double xpos = time / totalTime * canvasWidth;
-				double ypos = (canvasHeight - 30) - (energy[i] - min) / (max - min) * (canvasHeight - 60);
+				double ypos = (canvasHeight - 30) - (bic[i] - min) / (max - min) * (canvasHeight - 60);
 				//LDDebug.print("energy ratio: " + (min));
 				gc.strokeLine(prevX, prevY, xpos, ypos);
 				prevX = xpos;

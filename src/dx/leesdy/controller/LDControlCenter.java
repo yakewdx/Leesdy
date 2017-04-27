@@ -4,7 +4,9 @@ import dx.leesdy.model.LDMultiLayerCanvas;
 import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.model.MouseState;
 import dx.leesdy.model.Painter;
+import dx.leesdy.model.paintcomponents.PDrawBicValue;
 import dx.leesdy.model.paintcomponents.PDrawFrameEnergy;
+import dx.leesdy.model.paintcomponents.PDrawVerticalLine;
 import dx.leesdy.player.LDWavPlayer;
 import dx.leesdy.utils.LDConfigurationLoader;
 import dx.leesdy.utils.LDDebug;
@@ -154,9 +156,15 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 	}
 
 	public void diarization() {
-		if (painter.getComponentByName("PDrawFrameEnergy") == null)
-			painter.addComponent(new PDrawFrameEnergy(15,this.statusCenter));
+//		if (painter.getComponentByName("PDrawFrameEnergy") == null)
+//			painter.addComponent(new PDrawFrameEnergy(15,this.statusCenter));
+		if (painter.getComponentByName("PDrawBicValue") == null) {
+			painter.addComponent(new PDrawBicValue(15,this.statusCenter));
+			PDrawVerticalLine pc = (PDrawVerticalLine)painter.getComponentByName("PDrawVerticalLine");
+			pc.setShowBicValue(true);
+		}
 		this.player.diarization();
+		
 	}
 	
 	/**

@@ -2,6 +2,7 @@ package dx.leesdy.diarization;
 
 import dx.leesdy.diarization.audiofeature.LDMFCCFeature;
 import dx.leesdy.diarization.parameter.*;
+import dx.leesdy.diarization.segmentation.LDBICSegmentation;
 import dx.leesdy.diarization.segmentation.LDSegmentation;
 import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.utils.LDDebug;
@@ -18,14 +19,21 @@ public class LDDiarizationT {
 		
 		statusCenter.setReader_T(reader);
 		
-		// Segmentation
+		// Segmentation: initialize
 		LDSegmentation segmentation = new LDSegmentation(statusCenter, parameter, reader);
 		segmentation.initialize();
 		
 		// calculate MFCC
 		LDMFCCFeature mfccFeature = new LDMFCCFeature(segmentation.getSegments(), statusCenter, reader);
 		
+		
+		
+		// Segmentation: BIC based segmentation
+		LDBICSegmentation bicSeg = new LDBICSegmentation(statusCenter);
+		bicSeg.segmentation(mfccFeature.getFeature());
+		
 		LDDebug.print("Debugging");
+		
 		// calculate i-vector
 		
 		// PLDA scoring

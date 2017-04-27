@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import dx.leesdy.diarization.LDDiarizationResultReaderT;
 import dx.leesdy.diarization.datastructure.LDComplex;
+import dx.leesdy.diarization.datastructure.LDVector;
 import dx.leesdy.diarization.segmentation.LDTransform;
 import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.utils.LDDebug;
@@ -11,7 +12,7 @@ import dx.leesdy.utils.LDDebug;
 public class LDMFCCFeature {
 	
 	// mfcc + delta and delta-delta.
-	private ArrayList<double[]> feature;
+	private ArrayList<LDVector> feature;
 	
 	// the initial mfcc
 	private ArrayList<double[]> mfcc;
@@ -82,7 +83,7 @@ public class LDMFCCFeature {
 		ArrayList<double[]> delta = calcDelta(mfcc);
 		ArrayList<double[]> delta_delta = calcDelta(delta);
 		
-		this.feature = this.concat(mfcc, delta, delta_delta);
+		this.setFeature(this.concat(mfcc, delta, delta_delta));
 //		for (int i = 0; i < this.feature.size(); i++) {
 //			double[] j = this.feature.get(i);
 //			for (int k = 0; k < j.length; k++) {
@@ -124,8 +125,8 @@ public class LDMFCCFeature {
 		return res;
 	}
 	
-	private ArrayList<double[]> concat(ArrayList<double[]> a, ArrayList<double[]> b, ArrayList<double[]> c) {
-		ArrayList<double[]> res= new ArrayList<double[]>();
+	private ArrayList<LDVector> concat(ArrayList<double[]> a, ArrayList<double[]> b, ArrayList<double[]> c) {
+		ArrayList<LDVector> res= new ArrayList<LDVector>();
 		for (int i = 0; i < a.size(); i++) {
 			double[] _a, _b, _c;
 			_a = a.get(i);
@@ -140,7 +141,7 @@ public class LDMFCCFeature {
 			System.arraycopy(_a, 0, d, 0, al);
 			System.arraycopy(_b, 0, d, al, bl);
 			System.arraycopy(_c, 0, d, al+bl, cl);
-			res.add(d);
+			res.add(new LDVector(d));
 		}
 		return res;
 	}
@@ -192,6 +193,24 @@ public class LDMFCCFeature {
 	
 	private double mel2freq(double mel) {
 		return 700 * (Math.exp(mel / 1125) - 1);
+	}
+
+
+
+	/**
+	 * @return the feature
+	 */
+	public ArrayList<LDVector> getFeature() {
+		return feature;
+	}
+
+
+
+	/**
+	 * @param feature the feature to set
+	 */
+	public void setFeature(ArrayList<LDVector> feature) {
+		this.feature = feature;
 	}
 	
 }

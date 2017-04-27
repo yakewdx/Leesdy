@@ -5,14 +5,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import dx.leesdy.diarization.LDDiarizationResultReaderT;
 import dx.leesdy.model.*;
 import dx.leesdy.utils.LDSegment;
 
 public class PDrawVerticalLine extends PDrawPlaybackState {
 	
-	boolean showDiarizationResult;
+	private boolean showDiarizationResult;
+	private boolean showBicValue;
 	
 	private void init() {
+		this.showBicValue = false;
 		this.showDiarizationResult = false;
 		this.name = "PDrawVerticalLine";
 	}
@@ -27,12 +30,16 @@ public class PDrawVerticalLine extends PDrawPlaybackState {
 		this.showDiarizationResult = show;
 	}
 	
+	public void setShowBicValue(boolean show) {
+		this.showBicValue = show;
+	}
 	
 	@Override
 	public void paint(Canvas canvas) {
 		// TODO Auto-generated method stub
 		
 		MouseState ms = this.getCanvas().getMouseState();
+		int addonCount = 0;
 		
 		if (ms.isMouseInCanvas()) {
 			MediaPlayer pl = player;
@@ -53,12 +60,31 @@ public class PDrawVerticalLine extends PDrawPlaybackState {
 			//System.out.println(mousePos);
 			
 			if (this.showDiarizationResult == true) {
-				
+				addonCount++;
 				// get Label from the list
 				
 				LDSegment target = this.statusCenter.getReader().searchIntervalByTime(mouseTime);
 				if (target.contains(mouseTime))
-				gc.fillText(target.getSpeaker(), ms.getX() + 1.5, 29);
+				gc.fillText("Speaker: " + target.getSpeaker(), ms.getX() + 1.5, 15 + addonCount * 14);
+			}
+			
+			if (this.showBicValue == true) {
+				addonCount++;
+				LDDiarizationResultReaderT reader = this.statusCenter.getReader_T();
+				if (reader != null) {
+					double length = reader.getSegLen();
+					double step = reader.getSegStep();
+					int window_size = reader.getBicWindowSize();
+					double[] bicValue = this.statusCenter.getReader_T().getBicValue();
+					
+					int n = bicValue.length + 2 * window_size;
+					int t = (int) ((double)n * mouseTime / totalTime);
+					if (t < bicValue.length + window_size && t > window_size) {
+						double target = bicValue[t-window_size];
+						gc.fillText(String.format("Bic: %f", target), ms.getX() + 1.5, 15 + addonCount * 14);
+					}
+					
+				}
 			}
 		}
 		

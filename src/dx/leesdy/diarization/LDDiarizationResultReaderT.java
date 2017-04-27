@@ -8,6 +8,9 @@ public class LDDiarizationResultReaderT {
 	
 	private double[] mfccEnergy; 
 	
+	private int bicWindowSize;
+	private double[] bicValue;
+	
 	public LDDiarizationResultReaderT() {}
 
 	public double[] getMfccEnergy() {
@@ -40,6 +43,34 @@ public class LDDiarizationResultReaderT {
 
 	public void setNeedUpdate(boolean needUpdate) {
 		this.needUpdate = needUpdate;
+	}
+
+	/**
+	 * @return the bicValue
+	 */
+	public double[] getBicValue() {
+		return bicValue;
+	}
+
+	/**
+	 * @param bicValue the bicValue to set
+	 */
+	public void setBicValue(double[] bicValue) {
+		this.bicValue = bicValue;
+	}
+
+	/**
+	 * @return the bicWindowSize
+	 */
+	public int getBicWindowSize() {
+		return bicWindowSize;
+	}
+
+	/**
+	 * @param bicWindowSize the bicWindowSize to set
+	 */
+	public void setBicWindowSize(int bicWindowSize) {
+		this.bicWindowSize = bicWindowSize;
 	}
 	
 	
