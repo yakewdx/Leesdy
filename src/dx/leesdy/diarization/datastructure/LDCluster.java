@@ -8,15 +8,17 @@ package dx.leesdy.diarization.datastructure;
 
 import java.util.ArrayList;
 
+import JSci.maths.vectors.DoubleVector;
+
 /**
  * 
  */
 public class LDCluster {
 	
-	private ArrayList<LDVector> frames;
+	private ArrayList<DoubleVector> frames;
 	
 	public LDCluster() {
-		this.frames = new ArrayList<LDVector>();
+		this.frames = new ArrayList<DoubleVector>();
 	}
 	
 	public void add(LDVector frame) {

@@ -25,14 +25,14 @@ public class LDDiarizationT {
 		
 		// calculate MFCC
 		LDMFCCFeature mfccFeature = new LDMFCCFeature(segmentation.getSegments(), statusCenter, reader);
-		
+		mfccFeature.writeMFCCToFile();
 		
 		
 		// Segmentation: BIC based segmentation
-		LDBICSegmentation bicSeg = new LDBICSegmentation(statusCenter);
-		bicSeg.segmentation(mfccFeature.getFeature());
+//		LDBICSegmentation bicSeg = new LDBICSegmentation(statusCenter);
+//		bicSeg.segmentation(mfccFeature.getFeature());
 		
-		LDDebug.print("Debugging");
+		LDDebug.print("mfcc written to file");
 		
 		// calculate i-vector
 		

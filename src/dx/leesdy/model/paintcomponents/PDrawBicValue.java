@@ -6,6 +6,8 @@
  */
 package dx.leesdy.model.paintcomponents;
 
+import java.util.ArrayList;
+
 import dx.leesdy.model.LDStatusCenter;
 import dx.leesdy.utils.LDDebug;
 import javafx.scene.canvas.Canvas;
@@ -57,8 +59,10 @@ public class PDrawBicValue extends PainterComponent {
 		int window_size = statusCenter.getReader_T().getBicWindowSize();
 		double step = statusCenter.getReader_T().getSegStep();
 		double length = statusCenter.getReader_T().getSegLen();
+		ArrayList<Integer> changePoints = statusCenter.getReader_T().getChangePoints();
 		
-		if (bic != null) {
+		//
+		if (bic != null && changePoints != null) {
 			// find min and max
 			double min = Double.MAX_VALUE;
 			double max = -Double.MAX_VALUE;
@@ -88,6 +92,15 @@ public class PDrawBicValue extends PainterComponent {
 				gc.strokeLine(prevX, prevY, xpos, ypos);
 				prevX = xpos;
 				prevY = ypos;
+			}
+			
+			gc.setFill(Color.VIOLET);
+			for (int i = 0; i < changePoints.size(); i++) {
+				double time = changePoints.get(i) * step - length / 2;
+				double xpos = time / totalTime * canvasWidth;
+				double ypos = (canvasHeight - 30) - (bic[changePoints.get(i) - window_size] - min) / (max - min) * (canvasHeight - 60);
+				//LDDebug.print("energy ratio: " + (min));
+				gc.fillOval(xpos, ypos, 4, 4);
 			}
 			
 		}

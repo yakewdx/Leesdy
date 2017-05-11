@@ -156,10 +156,10 @@ public class LDControlCenter implements EventHandler<KeyEvent>{
 	}
 
 	public void diarization() {
-//		if (painter.getComponentByName("PDrawFrameEnergy") == null)
-//			painter.addComponent(new PDrawFrameEnergy(15,this.statusCenter));
+		if (painter.getComponentByName("PDrawFrameEnergy") == null)
+			painter.addComponent(new PDrawFrameEnergy(15,this.statusCenter));
 		if (painter.getComponentByName("PDrawBicValue") == null) {
-			painter.addComponent(new PDrawBicValue(15,this.statusCenter));
+			painter.addComponent(new PDrawBicValue(16,this.statusCenter));
 			PDrawVerticalLine pc = (PDrawVerticalLine)painter.getComponentByName("PDrawVerticalLine");
 			pc.setShowBicValue(true);
 		}

@@ -1,5 +1,7 @@
 package dx.leesdy.diarization;
 
+import java.util.ArrayList;
+
 public class LDDiarizationResultReaderT {
 	
 	private boolean needUpdate;
@@ -10,6 +12,7 @@ public class LDDiarizationResultReaderT {
 	
 	private int bicWindowSize;
 	private double[] bicValue;
+	private ArrayList<Integer> changePoints;
 	
 	public LDDiarizationResultReaderT() {}
 
@@ -71,6 +74,20 @@ public class LDDiarizationResultReaderT {
 	 */
 	public void setBicWindowSize(int bicWindowSize) {
 		this.bicWindowSize = bicWindowSize;
+	}
+
+	/**
+	 * @return the changePoints
+	 */
+	public ArrayList<Integer> getChangePoints() {
+		return changePoints;
+	}
+
+	/**
+	 * @param changePoints the changePoints to set
+	 */
+	public void setChangePoints(ArrayList<Integer> changePoints) {
+		this.changePoints = changePoints;
 	}
 	
 	

@@ -21,10 +21,22 @@ import dx.leesdy.diarization.datastructure.LDVector;
  */
 public class Gaussian {
 	
+	// sample count
+	private int count;
+	
 	private AbstractDoubleVector mean;
 	private DoubleSquareMatrix covariance;
 	
-	public Gaussian(AbstractDoubleVector mean, DoubleSquareMatrix covariance) {
+	public int getCount(){
+		return count;
+	}
+	
+	public int getDim() {
+		return mean.dimension();
+	}
+	
+	public Gaussian(AbstractDoubleVector mean, DoubleSquareMatrix covariance, int count) {
+		this.count = count;
 		this.mean = mean;
 		this.covariance = covariance;
 	}
@@ -33,25 +45,26 @@ public class Gaussian {
 	 * @return the mean
 	 */
 	public AbstractDoubleVector getMean() {
-		return mean;
+		return mean.scalarDivide((double)count);
 	}
-	/**
-	 * @param mean the mean to set
-	 */
-	public void setMean(DoubleVector mean) {
-		this.mean = mean;
-	}
+
+	
 	/**
 	 * @return the covariance
 	 */
 	public DoubleSquareMatrix getCovariance() {
-		return covariance;
+		return (DoubleSquareMatrix) covariance.scalarDivide((double)count);
 	}
-	/**
-	 * @param covariance the covariance to set
-	 */
-	public void setCovariance(DoubleSquareMatrix covariance) {
-		this.covariance = covariance;
+
+	// assume g1.dim == g2.dim
+	public static Gaussian Merge(Gaussian g1, Gaussian g2) {
+		int count = g1.count + g2.count;
+		AbstractDoubleVector _mean = new DoubleVector(g1.mean.dimension());
+		DoubleSquareMatrix _covariance = new DoubleSquareMatrix(g1.mean.dimension());
+		
+		_mean = g1.getMean().add(g2.mean);
+		_covariance = g1.covariance.add(g2.covariance);
+		return new Gaussian(_mean, _covariance, count);
 	}
 	
 	public static Gaussian approximate(ArrayList<LDVector> samples) {
@@ -64,7 +77,7 @@ public class Gaussian {
 			_mean = _mean.add(sample);
 		}
 		
-		_mean = _mean.scalarDivide((double)dim);
+		// _mean = _mean.scalarDivide((double)dim);
 		DoubleMatrix mean = new DoubleMatrix(dim,1);
 		for (int j = 0; j < dim; j++) {
 			mean.setElement(j, 0, _mean.getComponent(j));
@@ -82,9 +95,9 @@ public class Gaussian {
 			_covariance = _covariance.add(m);
 		}
 		
-		_covariance = (DoubleSquareMatrix) _covariance.scalarDivide((double)dim);
+		//_covariance = (DoubleSquareMatrix) _covariance.scalarDivide((double)dim);
 		
-		return new Gaussian(_mean, _covariance);
+		return new Gaussian(_mean, _covariance, dim);
 	}
 	
 	

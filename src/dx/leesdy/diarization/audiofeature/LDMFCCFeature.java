@@ -1,5 +1,7 @@
 package dx.leesdy.diarization.audiofeature;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import dx.leesdy.diarization.LDDiarizationResultReaderT;
@@ -25,6 +27,8 @@ public class LDMFCCFeature {
 	private double lowerFreq;
 	private double upperFreq;
 	
+	private String outputFile;
+	
 	// default : 14
 	private int mfccCount;
 	
@@ -42,6 +46,7 @@ public class LDMFCCFeature {
 		this.mfcc = new ArrayList<double[]> ();
 		this.reader = reader;
 		energy = new double[segments.size() + 1];
+		this.outputFile = "mfcc.txt";
 		reader.setMfccEnergy(energy);
 		calc(segments);
 	}
@@ -195,6 +200,24 @@ public class LDMFCCFeature {
 		return 700 * (Math.exp(mel / 1125) - 1);
 	}
 
+	public void writeMFCCToFile() {
+		
+		try{
+		    PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
+		    for (LDVector v : feature) {
+				for (int i = 0; i < v.dimension(); i++) {
+					writer.print(v.getComponent(i));
+					writer.print(" ");
+				}
+				writer.println();
+			}
+		    writer.close();
+		} catch (IOException e) {
+		   // do something
+		}
+		
+		
+	}
 
 
 	/**
@@ -203,7 +226,6 @@ public class LDMFCCFeature {
 	public ArrayList<LDVector> getFeature() {
 		return feature;
 	}
-
 
 
 	/**

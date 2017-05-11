@@ -76,14 +76,14 @@ public class PDrawVerticalLine extends PDrawPlaybackState {
 					double step = reader.getSegStep();
 					int window_size = reader.getBicWindowSize();
 					double[] bicValue = this.statusCenter.getReader_T().getBicValue();
-					
-					int n = bicValue.length + 2 * window_size;
-					int t = (int) ((double)n * mouseTime / totalTime);
-					if (t < bicValue.length + window_size && t > window_size) {
-						double target = bicValue[t-window_size];
-						gc.fillText(String.format("Bic: %f", target), ms.getX() + 1.5, 15 + addonCount * 14);
+					if (bicValue != null) {
+						int n = bicValue.length + 2 * window_size;
+						int t = (int) ((double)n * mouseTime / totalTime);
+						if (t < bicValue.length + window_size && t > window_size) {
+							double target = bicValue[t-window_size];
+							gc.fillText(String.format("Bic: %f", target), ms.getX() + 1.5, 15 + addonCount * 14);
+						}
 					}
-					
 				}
 			}
 		}

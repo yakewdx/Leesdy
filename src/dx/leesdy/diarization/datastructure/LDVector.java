@@ -30,4 +30,5 @@ public class LDVector extends DoubleVector{
 		// TODO Auto-generated constructor stub
 	}
 	
+	
 }

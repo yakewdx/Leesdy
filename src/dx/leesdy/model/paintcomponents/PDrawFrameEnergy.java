@@ -62,7 +62,7 @@ public class PDrawFrameEnergy extends PainterComponent {
 			
 			double prevX = 0;
 			double prevY = canvasHeight;
-			gc.setStroke(Color.WHITE);
+			gc.setStroke(Color.GRAY);
 			for (int i = 1; i < energy.length; i++) {
 				double time = (i-1) * step + length / 2;
 				double xpos = time / totalTime * canvasWidth;
